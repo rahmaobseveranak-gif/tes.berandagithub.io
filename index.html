@@ -10,8 +10,748 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Consolidated Stylesheet -->
+  <style>
+    :root {
+      --bg-c: #F9F8F6;
+      --cream: #F3EFEA;
+      --cream-2: #EFE9E1;
+      --dark-c: #2C2621;
+      --mid-c: #786E63;
+      --sage-deep: #3A5A40;
+      --sage-light: #E8F0E8;
+      --gold-dark: #A37021;
+      --gold-light: #FDF6E9;
+      --navy: #1D2D44;
+      --border-c: #E2DBD2;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(44, 38, 33, 0.05);
+      --shadow-md: 0 4px 12px rgba(44, 38, 33, 0.08);
+      --shadow-lg: 0 10px 25px rgba(44, 38, 33, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg-c);
+      color: var(--dark-c);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    .hidden { display: none !important; }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Simulation Notice Banner */
+    .demo-banner {
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 6px 1rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(249, 248, 246, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-c);
+      padding: 0.75rem 0;
+    }
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--sage-deep);
+      color: #fff;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .brand-pill {
+      background: var(--cream);
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      color: var(--mid-c);
+      border: 1px solid var(--border-c);
+      margin-left: 6px;
+    }
+
+    .nav-center-tabs {
+      display: flex;
+      background: var(--cream);
+      padding: 3px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-c);
+    }
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--mid-c);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-tab-btn.active, .nav-tab-btn:hover {
+      background: #fff;
+      color: var(--dark-c);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-tab-btn.active-primary {
+      background: var(--sage-deep);
+      color: #fff;
+    }
+
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--sage-deep);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #2D4732;
+    }
+    .btn-secondary {
+      background: var(--cream);
+      color: var(--dark-c);
+      border-color: var(--border-c);
+    }
+    .btn-secondary:hover {
+      background: var(--cream-2);
+    }
+    .btn-dark {
+      background: var(--navy);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #121C2B;
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--dark-c);
+      border-color: var(--border-c);
+    }
+    .btn-outline:hover {
+      background: var(--cream);
+    }
+    .btn-sm { padding: 5px 10px; font-size: 0.75rem; border-radius: var(--radius-sm); }
+    .btn-lg { padding: 12px 24px; font-size: 0.9rem; }
+
+    /* Pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .pill-sage { background: var(--sage-light); color: var(--sage-deep); border: 1px solid rgba(58,90,64,0.2); }
+    .pill-cream { background: var(--gold-light); color: var(--gold-dark); border: 1px solid rgba(163,112,33,0.2); }
+    .pill-navy { background: #E8EEF5; color: var(--navy); border: 1px solid rgba(29,45,68,0.2); }
+
+    /* Hero Hub */
+    .hero-hub {
+      padding: 2.5rem 0 3.5rem 0;
+    }
+    .hero-title-box {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 2.5rem auto;
+    }
+    .hero-headline {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.5px;
+    }
+    .hero-subline {
+      font-size: 0.95rem;
+      color: var(--mid-c);
+      line-height: 1.6;
+    }
+
+    /* Gateway Grid */
+    .gateways-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .gateway-card {
+      background: #fff;
+      border: 1.5px solid var(--border-c);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+    .gateway-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .gateway-card-a { border-top: 4px solid var(--sage-deep); }
+    .gateway-card-b { border-top: 4px solid var(--navy); }
+    .gateway-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .gateway-card-a .gateway-icon-box { background: var(--sage-light); color: var(--sage-deep); }
+    .gateway-card-b .gateway-icon-box { background: #E8EEF5; color: var(--navy); }
+    .gateway-card-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+    .gateway-card-desc {
+      font-size: 0.85rem;
+      color: var(--mid-c);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-input-group {
+      display: flex;
+      gap: 8px;
+      background: var(--cream);
+      padding: 6px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-c);
+      margin-bottom: 0.85rem;
+    }
+    .code-input {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--border-c);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-family: monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-c);
+      letter-spacing: 1px;
+    }
+    .code-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--mid-c);
+    }
+    .code-pill-btn {
+      background: var(--cream);
+      border: 1px solid var(--border-c);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--dark-c);
+      font-weight: 500;
+    }
+    .code-pill-btn:hover {
+      background: #fff;
+      border-color: var(--sage-deep);
+    }
+
+    /* Featured Outdoor Banner */
+    .featured-outdoor-banner {
+      background: #fff;
+      border: 1.5px solid var(--border-c);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2.5rem;
+    }
+    .featured-outdoor-media {
+      position: relative;
+      background: #eee;
+      min-height: 280px;
+    }
+    .featured-outdoor-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .featured-outdoor-content {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Principles Box */
+    .principles-box {
+      background: #fff;
+      border: 1.5px solid var(--border-c);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .principle-item {
+      background: var(--cream);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-c);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .principle-num {
+      width: 24px;
+      height: 24px;
+      background: var(--sage-deep);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Marketplace View */
+    .search-header {
+      background: #fff;
+      border-bottom: 1px solid var(--border-c);
+      padding: 1.25rem 0;
+    }
+    .search-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .location-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-c);
+    }
+    .location-select {
+      background: transparent;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--dark-c);
+      cursor: pointer;
+    }
+
+    .filter-bar {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border-c);
+      padding: 0.85rem 0;
+    }
+    .filter-row-categories {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .cat-btn {
+      background: #fff;
+      border: 1px solid var(--border-c);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--mid-c);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--sage-deep);
+      color: #fff;
+      border-color: var(--sage-deep);
+    }
+
+    .filter-row-selectors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-select {
+      background: #fff;
+      border: 1px solid var(--border-c);
+      border-radius: var(--radius-full);
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: var(--dark-c);
+      cursor: pointer;
+    }
+
+    /* Catalog Layout */
+    .results-summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.5rem 0 1rem 0;
+    }
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+    }
+    .catalog-left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .catalog-right-column {
+      position: sticky;
+      top: 80px;
+    }
+
+    /* Cards */
+    .card-item {
+      background: #fff;
+      border: 1.5px solid var(--border-c);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .card-item:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--sage-deep);
+    }
+    .card-img-box {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--border-c);
+      background: #eee;
+    }
+    .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Seat & Distance Badges */
+    .seat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .seat-available { background: var(--sage-light); color: var(--sage-deep); }
+    .seat-running-out { background: #FFF5E5; color: var(--gold-dark); }
+    .seat-full { background: #FDE8E8; color: #C53030; }
+
+    /* Map Box */
+    .map-container-box {
+      background: #fff;
+      border: 1.5px solid var(--border-c);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .map-header {
+      background: var(--cream);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-c);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .map-view-canvas {
+      height: 240px;
+      background: #EAE3D8;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-pin-marker {
+      position: absolute;
+      background: var(--sage-deep);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.65rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .map-pin-marker:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+    .map-pins-list {
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .map-pin-item {
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: var(--cream);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid transparent;
+    }
+    .map-pin-item:hover {
+      background: #fff;
+      border-color: var(--sage-deep);
+    }
+
+    /* Modals System */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(44, 38, 33, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 540px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transform: translateY(15px);
+      transition: transform 0.25s ease;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-overlay.active .modal-box {
+      transform: translateY(0);
+    }
+    .modal-box-lg { max-width: 720px; }
+    .modal-box-sm { max-width: 420px; }
+    .modal-header {
+      background: var(--cream);
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-c);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h2 { font-size: 1.15rem; }
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--mid-c);
+      padding: 4px;
+    }
+    .modal-body {
+      padding: 1.25rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .modal-footer {
+      padding: 1rem 1.25rem;
+      background: var(--cream);
+      border-top: 1px solid var(--border-c);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--dark-c);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border-c);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      color: var(--dark-c);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--sage-deep);
+    }
+
+    /* Coordinators Grid */
+    .coordinators-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .coordinator-card {
+      background: var(--cream);
+      border: 1px solid var(--border-c);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .coordinator-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-c);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--cream);
+      border-top: 1px solid var(--border-c);
+      padding: 1.5rem 0;
+      margin-top: auto;
+      font-size: 0.78rem;
+      color: var(--mid-c);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .gateways-grid { grid-template-columns: 1fr; }
+      .featured-outdoor-banner { grid-template-columns: 1fr; }
+      .catalog-layout { grid-template-columns: 1fr; }
+      .catalog-right-column { position: static; }
+      .principles-grid { grid-template-columns: 1fr 1fr; }
+      .nav-center-tabs { display: none; }
+    }
+    @media (max-width: 600px) {
+      .principles-grid { grid-template-columns: 1fr; }
+      .coordinators-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -104,7 +844,7 @@
           </p>
         </div>
 
-        <!-- TWO MAIN GATEWAY CHOICES (Section 2 Prompt) -->
+        <!-- TWO MAIN GATEWAY CHOICES -->
         <div class="gateways-grid">
           
           <!-- GATEWAY A: Masuk & Pantau Anak (Kode Akses Siswa 6-Digit) -->
@@ -186,10 +926,10 @@
 
         </div>
 
-        <!-- FEATURED FLAGSHIP: KEGIATAN OUTDOOR (Section 4 Prompt) -->
+        <!-- FEATURED FLAGSHIP: KEGIATAN OUTDOOR -->
         <div class="featured-outdoor-banner">
           <div class="featured-outdoor-media">
-            <img src="assets/images/outdoor-ragunan.jpg" alt="Misi Naturalis Ragunan" class="featured-outdoor-img" onerror="this.src='assets/images/outdoor-ragunan.jpg'"/>
+            <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80" alt="Misi Naturalis Ragunan" class="featured-outdoor-img" onerror="this.src='https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'"/>
             <div style="position:absolute; top:12px; left:12px;">
               <span class="pill pill-cream" style="box-shadow:var(--shadow-sm);">🌿 FITUR UNGGULAN OUTDOOR</span>
             </div>
@@ -439,17 +1179,13 @@
 
         <!-- Mobile List vs Map Toggle Buttons -->
         <div style="display:flex; align-items:center; gap:0.5rem;">
-          <div class="nav-center-tabs" style="display:inline-flex;" class="lg-hide">
-            <button id="mobile-list-btn" class="nav-tab-btn active btn-sm">📋 Daftar</button>
-            <button id="mobile-map-btn" class="nav-tab-btn btn-sm">🗺️ Peta</button>
-          </div>
-          <div class="pill pill-sage" style="display:none;" class="md-show">
+          <div class="pill pill-sage" style="display:inline-flex;">
             ✓ Transparansi Profil &amp; Kurikulum Damping
           </div>
         </div>
       </div>
 
-      <!-- 2-Column Catalog Layout (60% Cards List + 40% Sticky Map) -->
+      <!-- 2-Column Catalog Layout -->
       <div class="catalog-layout">
         
         <!-- LEFT COLUMN: Results Cards -->
@@ -527,7 +1263,7 @@
       </div>
       <div class="modal-body">
         <div style="display:flex; gap:1rem; margin-bottom:1rem; align-items:flex-start;">
-          <img id="m-tutor-avatar" src="assets/images/tutor-nadia.jpg" style="width:72px; height:72px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
+          <img id="m-tutor-avatar" src="" style="width:72px; height:72px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
           <div>
             <div id="m-tutor-headline" style="font-size:0.85rem; font-weight:600; color:var(--dark-c); margin-bottom:4px;"></div>
             <div style="font-size:0.75rem; color:var(--mid-c);">
@@ -575,7 +1311,7 @@
       <form id="form-booking-tutor">
         <div class="modal-body">
           <div style="display:flex; gap:10px; align-items:center; background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-c);">
-            <img id="book-tutor-photo" src="assets/images/tutor-nadia.jpg" style="width:44px; height:44px; border-radius:50%; object-fit:cover;" />
+            <img id="book-tutor-photo" src="" style="width:44px; height:44px; border-radius:50%; object-fit:cover;" />
             <div>
               <strong id="book-tutor-name" style="font-size:0.9rem;"></strong>
               <div id="book-tutor-rate" style="font-size:0.75rem; color:var(--sage-deep); font-weight:700;"></div>
@@ -645,7 +1381,7 @@
       </div>
       <div class="modal-body">
         <div style="display:flex; gap:1rem; align-items:flex-start; margin-bottom:1rem;">
-          <img id="m-bimbel-logo" src="assets/images/bimbel-nf.jpg" style="width:64px; height:64px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
+          <img id="m-bimbel-logo" src="" style="width:64px; height:64px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
           <div>
             <div id="m-bimbel-tagline" style="font-size:0.8rem; font-weight:700; color:var(--navy);"></div>
             <div style="font-size:0.75rem; color:var(--mid-c); margin-top:2px;">
@@ -693,7 +1429,7 @@
       <form id="form-inquiry-bimbel">
         <div class="modal-body">
           <div style="display:flex; gap:10px; align-items:center; background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-c);">
-            <img id="inq-bimbel-logo" src="assets/images/bimbel-nf.jpg" style="width:40px; height:40px; border-radius:var(--radius-md); object-fit:cover;" />
+            <img id="inq-bimbel-logo" src="" style="width:40px; height:40px; border-radius:var(--radius-md); object-fit:cover;" />
             <strong id="inq-bimbel-name" style="font-size:0.9rem; color:var(--navy);"></strong>
           </div>
 
@@ -768,7 +1504,7 @@
     </div>
   </div>
 
-  <!-- MODAL 6: Outdoor Detail Modal (With 2 Coordinators & Refund Table) -->
+  <!-- MODAL 6: Outdoor Detail Modal -->
   <div id="modal-outdoor-detail" class="modal-overlay">
     <div class="modal-box modal-box-lg">
       <div class="modal-header">
@@ -777,7 +1513,7 @@
       </div>
       <div class="modal-body">
         <div style="position:relative; height:180px; width:100%; border-radius:var(--radius-lg); overflow:hidden; margin-bottom:1rem;">
-          <img id="m-out-img" src="assets/images/outdoor-ragunan.jpg" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/images/outdoor-ragunan.jpg'"/>
+          <img id="m-out-img" src="" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'"/>
         </div>
 
         <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); font-size:0.785rem; margin-bottom:1rem; border:1px solid var(--border-c);">
@@ -822,7 +1558,6 @@
           <p id="m-out-safety" style="font-size:0.785rem; color:var(--mid-c);"></p>
         </div>
 
-        <!-- Pre-checkout Transparent Refund Policy Table -->
         <div style="margin-bottom:1rem;">
           <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">📋 Ketentuan Pembatalan &amp; Pengembalian Dana:</h4>
           <div id="m-out-refund-table"></div>
@@ -839,7 +1574,7 @@
     </div>
   </div>
 
-  <!-- MODAL 7: Train-Style Outdoor Booking Modal -->
+  <!-- MODAL 7: Outdoor Booking Modal -->
   <div id="modal-booking-outdoor" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
@@ -912,7 +1647,7 @@
     </div>
   </div>
 
-  <!-- MODAL 9: Student Portfolio Modal & Continuity -->
+  <!-- MODAL 9: Student Portfolio Modal -->
   <div id="modal-student-portfolio" class="modal-overlay">
     <div class="modal-box modal-box-lg">
       <div class="modal-header">
@@ -956,7 +1691,6 @@
           <p id="m-port-recommendation" style="font-size:0.8rem; line-height:1.5; color:var(--dark-c);"></p>
         </div>
 
-        <!-- Prominent Tutoring Continuity Button (Prompt Section 7) -->
         <div style="display:flex; justify-content:center;">
           <button id="m-port-cta-continue" class="btn btn-primary btn-lg" style="width:100%;">
             Lanjutkan Les dengan Guru Ini (Kak Nadia Rahma)
@@ -966,7 +1700,7 @@
     </div>
   </div>
 
-  <!-- MODAL 10: Parent Portal View (From 6-Digit Code) -->
+  <!-- MODAL 10: Parent Portal View -->
   <div id="modal-parent-portal" class="modal-overlay">
     <div class="modal-box modal-box-lg">
       <div class="modal-header">
@@ -1030,7 +1764,7 @@
     </div>
   </div>
 
-  <!-- MODAL 12: Parent Login Dialog (6-Digit Access Code) -->
+  <!-- MODAL 12: Parent Login Dialog -->
   <div id="modal-parent-login" class="modal-overlay">
     <div class="modal-box modal-box-sm">
       <div class="modal-header">
@@ -1070,8 +1804,1215 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <!-- =========================================================================
+       CONSOLIDATED APPLICATION JAVASCRIPT & DATA (With Valid Unsplash Photos)
+       ========================================================================= -->
+  <script>
+    const DampingData = {
+      tutors: [
+        {
+          id: "tutor-nadia",
+          name: "Kak Nadia Rahma, S.Si.",
+          category: "guru_privat",
+          headline: "Spesialis Eksplorasi Sains Alam & Metodologi Kontekstual",
+          education: "S1 Biologi FMIPA Universitas Indonesia",
+          area: "Tebet, Jakarta Selatan",
+          distanceKm: 1.2,
+          rate: 150000,
+          rateLabel: "Rp 150.000 / sesi (90 mnt)",
+          experience: "6 Tahun Pengalaman",
+          avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+          bio: "Berfokus pada pemahaman konsep dasar IPA dan Matematika melalui eksperimen objek nyata di sekitar anak, bukan sekadar menghafal rumus.",
+          approaches: ["Pendekatan Konstruktivis", "Eksperimen Objek Rumah", "Pemetaan Konsep Visual"],
+          exampleProject: "Membuat model penjernihan air sederhana untuk memahami bab campuran dan larutan.",
+          studentFit: ["Anak kinestetik", "Suka bertanya & rasa ingin tahu tinggi", "Butuh analogi nyata"],
+          subjects: ["IPA", "Matematika", "Biologi"],
+          topics: ["Ekosistem & Sains", "Pecahan"],
+          levels: ["SD", "SMP"],
+          methods: ["tatap_muka", "online"],
+          goals: ["penguatan_dasar", "proyek_eksplorasi"]
+        },
+        {
+          id: "tutor-dimas",
+          name: "Kak Dimas Prasetyo, S.Pd.",
+          category: "guru_privat",
+          headline: "Master Aljabar, Penalaran Logika & Persiapan Ujian Sekolah",
+          education: "S1 Pendidikan Matematika UPI Bandung",
+          area: "Kebayoran Baru, Jakarta Selatan",
+          distanceKm: 2.8,
+          rate: 175000,
+          rateLabel: "Rp 175.000 / sesi (90 mnt)",
+          experience: "7 Tahun Pengalaman",
+          avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+          bio: "Membantu siswa mengurai soal cerita matematika yang rumit menjadi langkah-langkah logis yang mudah dipahami tanpa stres.",
+          approaches: ["Step-by-Step Breakdown", "Latihan Soal Adaptif", "Game Penalaran Angka"],
+          exampleProject: "Bedah tuntas soal cerita pecahan bertingkat untuk ujian semester.",
+          studentFit: ["Cenderung cemas dengan matematika", "Butuh latihan rutin terarah", "Persiapan ujian"],
+          subjects: ["Matematika", "Fisika"],
+          topics: ["Persamaan Kuadrat", "Aljabar", "Pecahan"],
+          levels: ["SD", "SMP", "SMA"],
+          methods: ["tatap_muka", "online"],
+          goals: ["persiapan_ujian", "penguatan_dasar"]
+        },
+        {
+          id: "tutor-budi",
+          name: "Kak Budi Santoso, M.Kom.",
+          category: "guru_privat",
+          headline: "Pelopor Coding Interaktif, Scratch & Logika Komputasional Anak",
+          education: "S2 Ilmu Komputer Binus University",
+          area: "Kemang, Jakarta Selatan",
+          distanceKm: 3.5,
+          rate: 200000,
+          rateLabel: "Rp 200.000 / sesi (90 mnt)",
+          experience: "5 Tahun Pengalaman",
+          avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+          bio: "Mengajarkan logika pemrograman dasar dengan membuat game interaktif sendiri menggunakan Scratch dan Python visual.",
+          approaches: ["Project Based Learning", "Visual Block Programming", "Logical Problem Solving"],
+          exampleProject: "Membuat game maze interaktif dan animasi cerita sains.",
+          studentFit: ["Suka teknologi & game", "Tertarik kreativitas digital", "Anak visual"],
+          subjects: ["Coding Anak", "Matematika"],
+          topics: ["Coding Scratch", "Aljabar"],
+          levels: ["SD", "SMP"],
+          methods: ["tatap_muka", "online"],
+          goals: ["minat_bakat", "proyek_eksplorasi"]
+        },
+        {
+          id: "tutor-rizky",
+          name: "Kak Rizky Ramadhan, S.S.",
+          category: "guru_privat",
+          headline: "Spesialis Bahasa Inggris Komunikatif & Literasi Sastra Anak",
+          education: "S1 Sastra Inggris Universitas Indonesia",
+          area: "Tebet, Jakarta Selatan",
+          distanceKm: 1.5,
+          rate: 160000,
+          rateLabel: "Rp 160.000 / sesi (90 mnt)",
+          experience: "5 Tahun Pengalaman",
+          avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+          bio: "Membangun kepercayaan diri anak berbicara dan menulis dalam Bahasa Inggris melalui cerita interaktif dan percakapan natural.",
+          approaches: ["Storytelling Interaktif", "Phonics & Vocabulary Games", "Daily Conversational Practice"],
+          exampleProject: "Membuat buku cerita mini berbahasa Inggris karya anak sendiri.",
+          studentFit: ["Malu berbicara bahasa asing", "Suka cerita & buku", "Butuh pembiasaan aktif"],
+          subjects: ["Bahasa Inggris"],
+          topics: ["TPS SNBT"],
+          levels: ["PAUD", "SD", "SMP"],
+          methods: ["tatap_muka", "online"],
+          goals: ["minat_bakat", "penguatan_dasar"]
+        }
+      ],
+
+      bimbels: [
+        {
+          id: "bimbel-nf",
+          name: "Bimbel Nurul Fikri (Cabang Tebet)",
+          category: "lembaga_bimbel",
+          tagline: "Bimbingan Belajar Komprehensif Berbasis Karakter & Prestasi",
+          address: "Jl. Prof. Dr. Soepomo No. 45, Tebet, Jakarta Selatan",
+          phone: "021-8301234",
+          distanceKm: 1.1,
+          priceRange: "Rp 650.000 - Rp 1.500.000 / bulan",
+          logo: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=400&q=80",
+          description: "Lembaga bimbingan belajar terkemuka dengan metode belajar terstruktur, evaluasi berkala, dan penanaman nilai karakter Islami dan nasionalis.",
+          facilities: ["Ruang Kelas AC Interaktif", "Perpustakaan Mini & Bank Soal", "Konsultasi PR Harian", "Layanan Psikologi Belajar"],
+          programs: [
+            { name: "Program Reguler SD/SMP/SMA", desc: "Pendampingan mapel harian dan persiapan ulangan harian." },
+            { name: "Super Intensif SNBT 2027", desc: "Strategi bedah soal UTBK TPS & Literasi mendalam." }
+          ],
+          tutorsList: ["Dr. H. Ahmad Fauzi, M.Pd.", "Dra. Hj. Siti Aminah, M.Si."],
+          subjects: ["Matematika", "IPA", "Fisika", "Biologi", "Bahasa Inggris"],
+          topics: ["TPS SNBT", "Persamaan Kuadrat", "Pecahan"],
+          levels: ["SD", "SMP", "SMA", "UTBK"],
+          methods: ["tatap_muka", "online"],
+          goals: ["persiapan_ujian", "penguatan_dasar"]
+        },
+        {
+          id: "bimbel-go",
+          name: "Ganesha Operation (GO) — Cabang Tebet Raya",
+          category: "lembaga_bimbel",
+          tagline: "Pusat Bimbingan Belajar Terbesar dengan Konsep 'Logika Penalaran'",
+          address: "Jl. Tebet Raya No. 88, Tebet, Jakarta Selatan",
+          phone: "021-8299888",
+          distanceKm: 1.8,
+          priceRange: "Rp 750.000 - Rp 2.100.000 / bulan",
+          logo: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80",
+          description: "Terkenal dengan rumus sakti, tryout berbasis komputer (CBT) berkala, dan analisis kesiapan siswa masuk PTN impian.",
+          facilities: ["Laboratorium Komputer CBT", "Ruang Diskusi Kelompok", "Modul Eksklusif Berwarna", "Aplikasi E-Learning GO Expert"],
+          programs: [
+            { name: "Kelas Gold SD & SMP", desc: "Fokus penguatan konsep dasar & persiapan asesmen nasional." },
+            { name: "Kilas Balik UTBK SNBT", desc: "Drilling 1000+ soal penalaran kuantitatif & literasi." }
+          ],
+          tutorsList: ["Ir. Joko Susilo, M.T.", "Rini Kartika, S.Si."],
+          subjects: ["Matematika", "Fisika", "Biologi", "IPA"],
+          topics: ["TPS SNBT", "Aljabar", "Persamaan Kuadrat"],
+          levels: ["SD", "SMP", "SMA", "UTBK"],
+          methods: ["tatap_muka", "online"],
+          goals: ["persiapan_ujian"]
+        },
+        {
+          id: "bimbel-kalananti",
+          name: "Kalananti Coding & Robotics for Kids (Tebet Hub)",
+          category: "lembaga_bimbel",
+          tagline: "Coding & Robotics Academy untuk Generasi Kreatif Masa Depan",
+          address: "Ruko Tebet Mas Square Blok B-12, Jakarta Selatan",
+          phone: "021-83709911",
+          distanceKm: 2.2,
+          priceRange: "Rp 900.000 - Rp 2.500.000 / paket",
+          logo: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80",
+          description: "Akademi coding bersertifikasi internasional untuk anak usia 5-18 tahun dengan kurikulum berbasis project creation.",
+          facilities: ["Perangkat Laptop & Robotik Khusus", "Kelas Kecil (Max 6 Anak)", "Sertifikat Kelulusan Proyek"],
+          programs: [
+            { name: "Junior Explorer (Scratch Jr & Kodu)", desc: "Pengenalan logika pemrograman untuk usia SD awal." },
+            { name: "Python Game Developer", desc: "Pemrograman nyata untuk siswa SMP/SMA." }
+          ],
+          tutorsList: ["Andi Pratama, S.Kom.", "Jessica Lim, B.Sc."],
+          subjects: ["Coding Anak", "Matematika"],
+          topics: ["Coding Scratch", "Aljabar"],
+          levels: ["PAUD", "SD", "SMP"],
+          methods: ["tatap_muka", "online"],
+          goals: ["minat_bakat", "proyek_eksplorasi"]
+        },
+        {
+          id: "bimbel-bp",
+          name: "Bimbingan Privat Bintang Pelajar (Hub Selatan)",
+          category: "lembaga_bimbel",
+          tagline: "Bimbel Privat Berkarakter Islami & Prestasi Unggul",
+          address: "Jl. Tebet Barat Dalam Raya No. 12, Jakarta Selatan",
+          phone: "021-8314455",
+          distanceKm: 1.6,
+          priceRange: "Rp 550.000 - Rp 1.400.000 / bulan",
+          logo: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=400&q=80",
+          description: "Menggabungkan prestasi akademik tinggi dengan pembinaan karakter akhlak mulia dan kedisiplinan belajar.",
+          facilities: ["Ruang Belajar Nyaman", "Free Wi-Fi Belajar", "Laporan Perkembangan Bulanan ke Orang Tua"],
+          programs: [
+            { name: "Les Privat Kelompok Kecil", desc: "1 guru membimbing maksimal 3 siswa agar lebih fokus." }
+          ],
+          tutorsList: ["Ust. M. Ridwan, M.Pd.I."],
+          subjects: ["Matematika", "IPA", "Bahasa Inggris"],
+          topics: ["Pecahan", "Ekosistem & Sains"],
+          levels: ["SD", "SMP"],
+          methods: ["tatap_muka"],
+          goals: ["penguatan_dasar"]
+        }
+      ],
+
+      programs: [
+        {
+          id: "prog-pecahan-mastery",
+          name: "Paket Intensif: Master Pecahan & Desimal Tanpa Hafal Rumus",
+          category: "program_belajar",
+          provider: "Kak Nadia Rahma, S.Si.",
+          target: "Siswa Kelas 4 - 6 SD",
+          approach: "Visualisasi Potongan Kue & Garis Bilangan",
+          duration: "4 Sesi Pertemuan (@90 Menit)",
+          price: 550000,
+          priceLabel: "Rp 550.000 (4 Sesi)",
+          thumbnail: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80",
+          syllabus: [
+            "Sesi 1: Konsep dasar pecahan senilai menggunakan benda konkret.",
+            "Sesi 2: Operasi hitung penjumlahan & pengurangan penyebut berbeda.",
+            "Sesi 3: Perkalian dan pembagian pecahan dalam soal cerita sehari-hari.",
+            "Sesi 4: Evaluasi mandiri & kuis interaktif berbasis games."
+          ],
+          outcomes: [
+            "Anak tidak lagi takut dan bingung dengan soal pecahan.",
+            "Memahami konsep di balik rumus matematika secara intuitif.",
+            "Mendapatkan portofolio lembar kerja mandiri."
+          ],
+          subjects: ["Matematika"],
+          topics: ["Pecahan"],
+          levels: ["SD"],
+          methods: ["tatap_muka", "online"],
+          goals: ["penguatan_dasar"]
+        },
+        {
+          id: "prog-snbt-tps",
+          name: "Paket Kilat: Bedah Tuntas TPS UTBK SNBT 2027",
+          category: "program_belajar",
+          provider: "Bimbel Nurul Fikri & Tim Damping",
+          target: "Siswa Kelas 12 SMA / Gap Year",
+          approach: "Metode Penalaran Cepat & Bedah Pola Soal",
+          duration: "8 Sesi Pertemuan Intensif",
+          price: 1200000,
+          priceLabel: "Rp 1.200.000 (8 Sesi)",
+          thumbnail: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80",
+          syllabus: [
+            "Sesi 1-2: Kemampuan Penalaran Umum & Pola Bilangan.",
+            "Sesi 3-4: Pengetahuan & Pemahaman Umum (PPU).",
+            "Sesi 5-6: Pemahaman Bacaan & Menulis (PBM).",
+            "Sesi 7-8: Penalaran Kuantitatif & Tryout Simulasi CBT."
+          ],
+          outcomes: [
+            "Menguasai trik menjawab soal TPS dalam waktu rata-rata 1 menit.",
+            "Terbiasa dengan format soal UTBK berbasis item response theory."
+          ],
+          subjects: ["Matematika", "Bahasa Inggris"],
+          topics: ["TPS SNBT", "Aljabar"],
+          levels: ["SMA", "UTBK"],
+          methods: ["online", "tatap_muka"],
+          goals: ["persiapan_ujian"]
+        },
+        {
+          id: "prog-scratch-game",
+          name: "Paket Junior Coder: Bikin Game Petualanganmu Sendiri",
+          category: "program_belajar",
+          provider: "Kak Budi Santoso, M.Kom.",
+          target: "Siswa Kelas 3 - 6 SD",
+          approach: "Visual Block Coding & Storytelling",
+          duration: "5 Sesi Pertemuan (@90 Menit)",
+          price: 750000,
+          priceLabel: "Rp 750.000 (5 Sesi)",
+          thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
+          syllabus: [
+            "Sesi 1: Pengenalan sprite, backdrop, dan koordinat kartesius sederhana.",
+            "Sesi 2: Logika perulangan (loops) dan pengkondisian (if-else).",
+            "Sesi 3: Pembuatan rintangan, skor, dan sistem nyawa game.",
+            "Sesi 4: Sound effect dan animasi karakter buatan sendiri.",
+            "Sesi 5: Showcase presentasi game hasil karya anak."
+          ],
+          outcomes: [
+            "Anak memahami logika algoritmik secara menyenangkan.",
+            "Menghasilkan 1 game interaktif yang bisa dimainkan bersama teman."
+          ],
+          subjects: ["Coding Anak"],
+          topics: ["Coding Scratch"],
+          levels: ["SD"],
+          methods: ["tatap_muka", "online"],
+          goals: ["minat_bakat", "proyek_eksplorasi"]
+        }
+      ],
+
+      outdoors: [
+        {
+          id: "outdoor-naturalis-ragunan",
+          name: "Misi Naturalis — Mengenal Ekosistem & Adaptasi Satwa",
+          category: "kegiatan_outdoor",
+          date: "15 November 2026",
+          schedule: "08:00 – 10:00 WIB",
+          location: "Taman Margasatwa Ragunan, Jakarta Selatan",
+          meetingPoint: "Pintu Barat Primata Schmutzer",
+          capacityTotal: 15,
+          capacityLeft: 4,
+          price: 150000,
+          priceLabel: "Rp 150.000 / anak",
+          thumbnail: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80",
+          coordinators: [
+            {
+              name: "Kak Nadia Rahma, S.Si.",
+              role: "Eksplorasi Alam & Observasi",
+              avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+              name: "Kak Dimas Prasetyo, S.Pd.",
+              role: "Refleksi & Konsep IPA Sekolah",
+              avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+            }
+          ],
+          curriculumLink: "Selaras dengan Bab Ekosistem, Rantai Makanan, dan Adaptasi Makhluk Hidup Kurikulum Merdeka Fase B & C.",
+          targetAudience: "Siswa SD Kelas 3 - 6 (Didampingi fasilitator Damping)",
+          rundown: [
+            "08:00 - 08:15: Briefing pembagian Jurnal Misi Detektif Satwa & ice breaking.",
+            "08:15 - 09:30: Eksplorasi langsung ke area primata & burung, mencatat perilaku dan ciri fisik adaptasi.",
+            "09:30 - 10:00: Diskusi kelompok kecil, pengisian kesimpulan jurnal, dan foto bersama."
+          ],
+          feeIncludes: ["Tiket masuk Ragunan anak", "Jurnal misi eksklusif", "Alat tulis & kaca pembesar pinjaman", "Snack sehat & air mineral", "Portofolio digital anak"],
+          equipmentNeeded: ["Topi & botol minum pribadi", "Sepatu kets / olahraga yang nyaman", "Jas hujan lipat (antisipasi cuaca)"],
+          safetyInfo: "Didampingi 2 fasilitator berpengalaman dengan rasio 1 fasilitator banding 7 anak. Jalur steril dari area terbuka berbahaya.",
+          refundPolicy: [
+            { window: "H-3 atau lebih", refund: "100% Dikembalikan" },
+            { window: "H-1 sampai H-2", refund: "50% Dikembalikan" },
+            { window: "Hari H / Terlewat", refund: "Dapat dialihkan ke jadwal berikutnya" }
+          ],
+          subjects: ["IPA", "Biologi"],
+          topics: ["Ekosistem & Sains"],
+          levels: ["SD"],
+          methods: ["outdoor"],
+          goals: ["proyek_eksplorasi"]
+        },
+        {
+          id: "outdoor-srengseng",
+          name: "Detektif Hutan Kota — Siklus Tumbuhan & Fotosintesis Nyata",
+          category: "kegiatan_outdoor",
+          date: "22 November 2026",
+          schedule: "08:30 – 10:30 WIB",
+          location: "Hutan Kota Srengseng, Jakarta Barat",
+          meetingPoint: "Pintu Utama Dekat Danau Srengseng",
+          capacityTotal: 12,
+          capacityLeft: 6,
+          price: 135000,
+          priceLabel: "Rp 135.000 / anak",
+          thumbnail: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+          coordinators: [
+            {
+              name: "Kak Nadia Rahma, S.Si.",
+              role: "Eksplorasi Tumbuhan",
+              avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+              name: "Kak Budi Santoso, M.Kom.",
+              role: "Dokumentasi & Jurnal Digital",
+              avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+            }
+          ],
+          curriculumLink: "Materi Fotosintesis, Bagian Tumbuhan, dan Keseimbangan Lingkungan Hidup.",
+          targetAudience: "Siswa SD Kelas 2 - 5",
+          rundown: [
+            "08:30 - 08:45: Pengenalan misi detektif flora hutan.",
+            "08:45 - 10:00: Penjelajahan mengamati bentuk daun, jenis akar, dan pencatatan sampel.",
+            "10:00 - 10:30: Presentasi temuan unik tiap kelompok."
+          ],
+          feeIncludes: ["Tiket masuk area konservasi", "Jurnal botani anak", "Snack & air mineral", "Portofolio perkembangan"],
+          equipmentNeeded: ["Sepatu lapangan", "Pakaian bebas rapi & nyaman", "Botol minum"],
+          safetyInfo: "Pengawasan ketat di area teduh dan jalur setapak paving.",
+          refundPolicy: [
+            { window: "H-3 atau lebih", refund: "100% Dikembalikan" },
+            { window: "Kurang dari H-3", refund: "50% Dikembalikan" }
+          ],
+          subjects: ["IPA", "Biologi"],
+          topics: ["Ekosistem & Sains"],
+          levels: ["SD"],
+          methods: ["outdoor"],
+          goals: ["proyek_eksplorasi"]
+        },
+        {
+          id: "outdoor-tebet",
+          name: "Eco-Science Lab — Eksperimen Air & Tanah di Taman Tebet",
+          category: "kegiatan_outdoor",
+          date: "29 November 2026",
+          schedule: "09:00 – 11:00 WIB",
+          location: "Taman Tebet Eco Park, Jakarta Selatan",
+          meetingPoint: "Plaza Utama Jembatan Cinta",
+          capacityTotal: 15,
+          capacityLeft: 8,
+          price: 140000,
+          priceLabel: "Rp 140.000 / anak",
+          thumbnail: "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80",
+          coordinators: [
+            {
+              name: "Kak Dimas Prasetyo, S.Pd.",
+              role: "Fasilitator Sains Lapangan",
+              avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+              name: "Kak Rizky Ramadhan, S.S.",
+              role: "Fasilitator Komunikasi & Kuis",
+              avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+            }
+          ],
+          curriculumLink: "Keterkaitan siklus air tanah, penyerapan, dan kebersihan lingkungan.",
+          targetAudience: "Siswa SD Kelas 3 - 6",
+          rundown: [
+            "09:00 - 09:15: Penjelasan mini lab outdoor.",
+            "09:15 - 10:30: Praktik uji saringan air sederhana menggunakan pasir, kerikil, dan arang.",
+            "10:30 - 11:00: Kesimpulan dan pembagian lencana eco-scientist."
+          ],
+          feeIncludes: ["Alat praktikum mini lab", "Modul panduan", "Snack sehat", "Sertifikat"],
+          equipmentNeeded: ["Botol plastik bekas 1.5 liter (1 buah)", "Pakaian ganti santai"],
+          safetyInfo: "Kegiatan di area terbuka yang teduh dan bersih.",
+          refundPolicy: [
+            { window: "H-3", refund: "100% Refund" },
+            { window: "H-1", refund: "50% Refund" }
+          ],
+          subjects: ["IPA", "Fisika"],
+          topics: ["Ekosistem & Sains"],
+          levels: ["SD"],
+          methods: ["outdoor"],
+          goals: ["proyek_eksplorasi"]
+        }
+      ]
+    };
+
+    /* Portfolios & Student Access Codes */
+    const DampingPortfolios = {
+      "Z5C78E": {
+        studentName: "Farel Pratama",
+        grade: "Kelas 5 SD (SDN Tebet Timur 01)",
+        code: "Z5C78E",
+        tutorName: "Kak Nadia Rahma, S.Sci.",
+        attendance: "100% (4 dari 4 Sesi Hadir)",
+        upcomingSchedule: "Rabu, 18 November 2026 pukul 16:00 WIB (Sesi 3 Pecahan)",
+        teacherSummary: "Farel menunjukkan peningkatan pesat dalam memahami konsep pecahan senilai menggunakan metode visual kue. Mulai aktif bertanya saat eksperimen sederhana.",
+        activityName: "Misi Naturalis — Mengenal Ekosistem & Adaptasi Satwa (Ragunan)",
+        activityDate: "15 November 2026",
+        competencies: [
+          "Mampu membedakan hewan herbivora, karnivora, dan omnivora secara langsung.",
+          "Aktif mencatat ciri fisik adaptasi paruh burung dalam jurnal lapangan.",
+          "Bekerja sama dengan baik dalam kelompok kecil penjelajah."
+        ],
+        observations: "Farel sangat antusias mengamati area primata schmutzer dan mampu menjawab pertanyaan pemantik dari Kak Nadia dengan analogi yang tepat.",
+        strengths: ["Rasa ingin tahu tinggi", "Teliti dalam mencatat jurnal", "Percaya diri"],
+        development: ["Perlu latihan lanjutan untuk soal cerita pecahan tingkat lanjut."],
+        recommendation: "Sangat disarankan melanjutkan sesi privat dengan Kak Nadia Rahma untuk penguatan materi pecahan bertingkat dan persiapan ujian akhir semester."
+      },
+      "NF8821": {
+        studentName: "Aisyah Zahra",
+        grade: "Kelas 8 SMP (SMP Labschool Jakarta)",
+        code: "NF8821",
+        tutorName: "Dr. H. Ahmad Fauzi, M.Pd. (Bimbel Nurul Fikri)",
+        attendance: "95% (Hadir Tepat Waktu)",
+        upcomingSchedule: "Kamis, 19 November 2026 pukul 15:30 WIB (Matematika Aljabar)",
+        teacherSummary: "Aisyah memiliki daya tangkap aljabar yang sangat baik. Konsisten mengerjakan PR dan aktif dalam diskusi kelompok di cabang Bimbel Nurul Fikri.",
+        activityName: "Detektif Hutan Kota — Siklus Tumbuhan",
+        activityDate: "22 November 2026",
+        competencies: [
+          "Memahami proses fotosintesis dan tranportasi air pada tumbuhan tinggi.",
+          "Mampu menyusun laporan pengamatan botani secara sistematis."
+        ],
+        observations: "Aisyah menunjukkan kepemimpinan yang baik saat memimpin kelompok kecil dalam mengumpulkan sampel daun.",
+        strengths: ["Analitis", "Disiplin", "Mandiri"],
+        development: ["Tingkatkan kecepatan pengerjaan soal latihan aljabar."],
+        recommendation: "Pertahankan performa belajar dan ikuti tryout rutin bulanan."
+      }
+    };
+
+    /* State Management */
+    let appState = {
+      currentTab: 'home', // 'home', 'marketplace', 'tutor_dashboard'
+      userRole: 'parent', // 'parent', 'tutor'
+      selectedCategory: 'all',
+      selectedLocation: 'Tebet',
+      subject: '',
+      topic: '',
+      level: '',
+      method: '',
+      goal: '',
+      maxRate: 250000,
+      sort: 'distance',
+      bookedTickets: [
+        {
+          id: 'TKT-88219',
+          title: 'Misi Naturalis — Mengenal Ekosistem & Adaptasi Satwa',
+          date: '15 November 2026 (08:00 WIB)',
+          location: 'Taman Margasatwa Ragunan',
+          children: 'Farel Pratama (Kelas 5 SD)',
+          parentName: 'Ibu Ratna Wardani',
+          totalPaid: 'Rp 150.000',
+          qrCode: 'QR-DAMPING-99821'
+        }
+      ],
+      requests: [
+        {
+          id: 'REQ-01',
+          tutorName: 'Kak Nadia Rahma, S.Sci.',
+          studentName: 'Farel Pratama',
+          parentName: 'Ibu Ratna Wardani',
+          phone: '0812-3456-7890',
+          subject: 'Matematika & IPA',
+          method: 'Tatap Muka di Rumah',
+          day: 'Rabu (Sore)',
+          notes: 'Butuh penguatan soal cerita pecahan',
+          status: 'Menunggu Konfirmasi'
+        }
+      ]
+    };
+
+    /* Main App Controller */
+    class DampingApp {
+      constructor() {
+        this.initEventListeners();
+        this.renderHub();
+        this.updateBadges();
+      }
+
+      initEventListeners() {
+        // Navigation Tabs
+        document.getElementById('tab-btn-home').addEventListener('click', () => this.switchTab('home'));
+        document.getElementById('tab-btn-marketplace').addEventListener('click', () => this.switchTab('marketplace'));
+        
+        // Gateway CTA
+        document.getElementById('btn-gateway-login').addEventListener('click', () => {
+          const code = document.getElementById('input-gateway-code').value.trim();
+          this.openParentPortalWithCode(code);
+        });
+        document.getElementById('btn-gateway-explore').addEventListener('click', () => this.switchTab('marketplace'));
+
+        // Quick Top Action Buttons
+        document.getElementById('nav-btn-tickets').addEventListener('click', () => this.openTicketsModal());
+        document.getElementById('nav-btn-requests').addEventListener('click', () => this.openRequestsModal());
+        document.getElementById('nav-btn-portal').addEventListener('click', () => this.openModal('modal-parent-login'));
+
+        // Role Toggle
+        document.getElementById('btn-parent-mode').addEventListener('click', () => {
+          appState.userRole = 'parent';
+          document.getElementById('btn-parent-mode').className = 'nav-tab-btn active-primary btn-sm';
+          document.getElementById('btn-tutor-mode').className = 'nav-tab-btn btn-sm';
+          this.switchTab('home');
+        });
+        document.getElementById('btn-tutor-mode').addEventListener('click', () => {
+          appState.userRole = 'tutor';
+          document.getElementById('btn-tutor-mode').className = 'nav-tab-btn active-primary btn-sm';
+          document.getElementById('btn-parent-mode').className = 'nav-tab-btn btn-sm';
+          this.switchTab('tutor_dashboard');
+        });
+
+        // Location Selector
+        document.getElementById('location-select').addEventListener('change', (e) => {
+          appState.selectedLocation = e.target.value;
+          this.renderMarketplace();
+        });
+
+        // Category Buttons
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            const targetBtn = e.currentTarget;
+            targetBtn.classList.add('active');
+            appState.selectedCategory = targetBtn.getAttribute('data-category');
+            this.renderMarketplace();
+          });
+        });
+
+        // Filters
+        document.getElementById('filter-subject').addEventListener('change', (e) => { appState.subject = e.target.value; this.renderMarketplace(); });
+        document.getElementById('filter-topic').addEventListener('change', (e) => { appState.topic = e.target.value; this.renderMarketplace(); });
+        document.getElementById('filter-level').addEventListener('change', (e) => { appState.level = e.target.value; this.renderMarketplace(); });
+        document.getElementById('filter-method').addEventListener('change', (e) => { appState.method = e.target.value; this.renderMarketplace(); });
+        document.getElementById('filter-goal').addEventListener('change', (e) => { appState.goal = e.target.value; this.renderMarketplace(); });
+        document.getElementById('filter-sort').addEventListener('change', (e) => { appState.sort = e.target.value; this.renderMarketplace(); });
+        
+        const rateRange = document.getElementById('filter-rate-range');
+        rateRange.addEventListener('input', (e) => {
+          appState.maxRate = parseInt(e.target.value);
+          document.getElementById('rate-val-label').textContent = 'Rp ' + appState.maxRate.toLocaleString('id-ID');
+          this.renderMarketplace();
+        });
+
+        document.getElementById('btn-reset-filters').addEventListener('click', () => {
+          appState.selectedCategory = 'all';
+          appState.subject = '';
+          appState.topic = '';
+          appState.level = '';
+          appState.method = '';
+          appState.goal = '';
+          appState.maxRate = 250000;
+          document.getElementById('filter-subject').value = '';
+          document.getElementById('filter-topic').value = '';
+          document.getElementById('filter-level').value = '';
+          document.getElementById('filter-method').value = '';
+          document.getElementById('filter-goal').value = '';
+          document.getElementById('filter-rate-range').value = 250000;
+          document.getElementById('rate-val-label').textContent = 'Rp 250.000';
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('.cat-btn[data-category="all"]').classList.add('active');
+          this.renderMarketplace();
+        });
+
+        // Booking Tutor Form Submit
+        document.getElementById('form-booking-tutor').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const studentName = document.getElementById('book-student-name').value;
+          const parentName = document.getElementById('book-parent-name').value;
+          const phone = document.getElementById('book-parent-phone').value;
+          const subject = document.getElementById('book-subject').value;
+          const method = document.getElementById('book-method').value;
+          const day = document.getElementById('book-day').value;
+          const notes = document.getElementById('book-notes').value;
+
+          appState.requests.unshift({
+            id: 'REQ-' + Math.floor(10 + Math.random() * 90),
+            tutorName: document.getElementById('book-tutor-name').textContent,
+            studentName, parentName, phone, subject, method, day, notes,
+            status: 'Menunggu Konfirmasi'
+          });
+
+          this.closeModal('modal-booking-tutor');
+          this.closeModal('modal-tutor-profile');
+          this.updateBadges();
+          this.showNotification('Pengajuan les berhasil dikirimkan ke guru!');
+        });
+
+        // Bimbel Inquiry Form Submit
+        document.getElementById('form-inquiry-bimbel').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.closeModal('modal-inquiry-bimbel');
+          this.closeModal('modal-bimbel-profile');
+          this.showNotification('Permintaan konsultasi bimbel berhasil dikirim!');
+        });
+
+        // Outdoor Booking Form Submit
+        document.getElementById('form-booking-outdoor').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const count = parseInt(document.getElementById('book-out-count').value);
+          const children = document.getElementById('book-out-children-names').value;
+          const parentName = document.getElementById('book-out-parent-name').value;
+          
+          appState.bookedTickets.unshift({
+            id: 'TKT-' + Math.floor(10000 + Math.random() * 90000),
+            title: document.getElementById('book-out-title').textContent,
+            date: '15 November 2026 (08:00 WIB)',
+            location: 'Taman Margasatwa Ragunan',
+            children: children,
+            parentName: parentName,
+            totalPaid: document.getElementById('book-out-total').textContent,
+            qrCode: 'QR-DAMPING-' + Math.floor(100000 + Math.random() * 900000)
+          });
+
+          this.closeModal('modal-booking-outdoor');
+          this.closeModal('modal-outdoor-detail');
+          this.updateBadges();
+          this.showNotification('Tiket berhasil dipesan & diterbitkan!');
+        });
+      }
+
+      switchTab(tabName) {
+        appState.currentTab = tabName;
+        document.getElementById('home-view').classList.add('hidden');
+        document.getElementById('marketplace-view').classList.add('hidden');
+        document.getElementById('tutor-dashboard-view').classList.add('hidden');
+
+        document.getElementById('tab-btn-home').classList.remove('active');
+        document.getElementById('tab-btn-marketplace').classList.remove('active');
+
+        if (tabName === 'home') {
+          document.getElementById('home-view').classList.remove('hidden');
+          document.getElementById('tab-btn-home').classList.add('active');
+          window.scrollTo(0, 0);
+        } else if (tabName === 'marketplace') {
+          document.getElementById('marketplace-view').classList.remove('hidden');
+          document.getElementById('tab-btn-marketplace').classList.add('active');
+          this.renderMarketplace();
+          window.scrollTo(0, 0);
+        } else if (tabName === 'tutor_dashboard') {
+          document.getElementById('tutor-dashboard-view').classList.remove('hidden');
+          this.renderTutorDashboard();
+          window.scrollTo(0, 0);
+        }
+      }
+
+      renderHub() {
+        // Hub is static HTML rendered correctly
+      }
+
+      renderMarketplace() {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+
+        // Collect all items
+        let allItems = [];
+        if (appState.selectedCategory === 'all' || appState.selectedCategory === 'guru_privat') {
+          allItems = allItems.concat(DampingData.tutors);
+        }
+        if (appState.selectedCategory === 'all' || appState.selectedCategory === 'lembaga_bimbel') {
+          allItems = allItems.concat(DampingData.bimbels);
+        }
+        if (appState.selectedCategory === 'all' || appState.selectedCategory === 'program_belajar') {
+          allItems = allItems.concat(DampingData.programs);
+        }
+        if (appState.selectedCategory === 'all' || appState.selectedCategory === 'kegiatan_outdoor') {
+          allItems = allItems.concat(DampingData.outdoors);
+        }
+
+        // Apply filters
+        const filtered = allItems.filter(item => {
+          // Subject filter
+          if (appState.subject && item.subjects && !item.subjects.includes(appState.subject)) return false;
+          // Topic filter
+          if (appState.topic && item.topics && !item.topics.includes(appState.topic)) return false;
+          // Level filter
+          if (appState.level && item.levels && !item.levels.includes(appState.level)) return false;
+          // Method filter
+          if (appState.method && item.methods && !item.methods.includes(appState.method)) return false;
+          // Goal filter
+          if (appState.goal && item.goals && !item.goals.includes(appState.goal)) return false;
+          // Max Rate filter (for tutors/programs)
+          if (item.rate && item.rate > appState.maxRate) return false;
+          if (item.price && item.price > appState.maxRate) return false;
+          return true;
+        });
+
+        // Apply sort
+        filtered.sort((a, b) => {
+          if (appState.sort === 'distance') return (a.distanceKm || 1) - (b.distanceKm || 1);
+          if (appState.sort === 'rate_asc') return (a.rate || a.price || 0) - (b.rate || b.price || 0);
+          if (appState.sort === 'rate_desc') return (b.rate || b.price || 0) - (a.rate || a.price || 0);
+          return 0;
+        });
+
+        document.getElementById('results-count-desc').textContent = `Ditemukan ${filtered.length} layanan pembelajaran di wilayah ${appState.selectedLocation}`;
+
+        const emptyState = document.getElementById('empty-state');
+        if (filtered.length === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+          filtered.forEach(item => {
+            container.appendChild(this.createCardElement(item));
+          });
+        }
+
+        this.renderMapAndPins(filtered);
+      }
+
+      createCardElement(item) {
+        const div = document.createElement('div');
+        div.className = 'card-item';
+
+        let imgUrl = item.avatar || item.logo || item.thumbnail;
+        let badgeHtml = '';
+        let title = item.name;
+        let subtitle = item.headline || item.tagline || item.target || item.location;
+        let priceText = item.rateLabel || item.priceRange || item.priceLabel;
+
+        if (item.category === 'guru_privat') {
+          badgeHtml = '<span class="pill pill-sage">🎓 Guru Privat Mandiri</span>';
+        } else if (item.category === 'lembaga_bimbel') {
+          badgeHtml = '<span class="pill pill-navy">🏢 Lembaga Bimbel Resmi</span>';
+        } else if (item.category === 'program_belajar') {
+          badgeHtml = '<span class="pill pill-cream">🎯 Paket Spesifik Topik</span>';
+        } else if (item.category === 'kegiatan_outdoor') {
+          badgeHtml = '<span class="pill pill-sage">🌿 Kegiatan Eksplorasi Outdoor</span>';
+          if (item.capacityLeft <= 5) {
+            badgeHtml += ` <span class="seat-badge seat-running-out">Sisa ${item.capacityLeft} Kursi</span>`;
+          } else {
+            badgeHtml += ` <span class="seat-badge seat-available">Tersedia ${item.capacityLeft} Kursi</span>`;
+          }
+        }
+
+        div.innerHTML = `
+          <img src="${imgUrl}" class="card-img-box" onerror="this.src='https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80'" />
+          <div class="card-content">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
+                ${badgeHtml}
+                <span style="font-size:0.75rem; color:var(--mid-c);">📍 ~${item.distanceKm || 1.5} km</span>
+              </div>
+              <h3 class="font-serif" style="font-size:1.15rem; margin-bottom:2px;">${title}</h3>
+              <p style="font-size:0.785rem; color:var(--mid-c); margin-bottom:8px;">${subtitle}</p>
+            </div>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-c); padding-top:8px;">
+              <div style="font-size:0.95rem; font-weight:700; color:var(--sage-deep);">${priceText}</div>
+              <button class="btn btn-outline btn-sm card-detail-btn">Lihat Detail &rarr;</button>
+            </div>
+          </div>
+        `;
+
+        div.querySelector('.card-detail-btn').addEventListener('click', () => {
+          if (item.category === 'guru_privat') this.openTutorProfile(item);
+          else if (item.category === 'lembaga_bimbel') this.openBimbelProfile(item);
+          else if (item.category === 'program_belajar') this.openProgramDetail(item);
+          else if (item.category === 'kegiatan_outdoor') this.openOutdoorDetail(item.id);
+        });
+
+        return div;
+      }
+
+      renderMapAndPins(items) {
+        const pinsList = document.getElementById('map-pins-list');
+        const mapCanvas = document.getElementById('map-canvas');
+        pinsList.innerHTML = '';
+        // Clear previous markers
+        mapCanvas.innerHTML = `
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#555;">
+            <div style="font-size:1.5rem; margin-bottom:4px;">📍</div>
+            <div style="font-size:0.75rem; font-weight:700;">Titik Pusat: ${appState.selectedLocation}</div>
+          </div>
+        `;
+
+        items.forEach((item, index) => {
+          // Add Pin to Canvas
+          const marker = document.createElement('div');
+          marker.className = 'map-pin-marker';
+          // Generate pseudo coordinates inside canvas
+          const topPercent = 20 + (index * 18) % 65;
+          const leftPercent = 15 + (index * 28) % 70;
+          marker.style.top = topPercent + '%';
+          marker.style.left = leftPercent + '%';
+          marker.textContent = (index + 1) + '. ' + (item.name.substring(0, 12) + '...');
+          marker.title = item.name;
+          marker.addEventListener('click', () => {
+            if (item.category === 'guru_privat') this.openTutorProfile(item);
+            else if (item.category === 'lembaga_bimbel') this.openBimbelProfile(item);
+            else if (item.category === 'program_belajar') this.openProgramDetail(item);
+            else if (item.category === 'kegiatan_outdoor') this.openOutdoorDetail(item.id);
+          });
+          mapCanvas.appendChild(marker);
+
+          // Add to Pins List
+          const pItem = document.createElement('div');
+          pItem.className = 'map-pin-item';
+          pItem.innerHTML = `
+            <span><strong>${index + 1}.</strong> ${item.name}</span>
+            <span style="color:var(--sage-deep); font-weight:700;">~${item.distanceKm || 1.2} km</span>
+          `;
+          pItem.addEventListener('click', () => {
+            if (item.category === 'guru_privat') this.openTutorProfile(item);
+            else if (item.category === 'lembaga_bimbel') this.openBimbelProfile(item);
+            else if (item.category === 'program_belajar') this.openProgramDetail(item);
+            else if (item.category === 'kegiatan_outdoor') this.openOutdoorDetail(item.id);
+          });
+          pinsList.appendChild(pItem);
+        });
+      }
+
+      openTutorProfile(tutor) {
+        document.getElementById('m-tutor-name').textContent = tutor.name;
+        document.getElementById('m-tutor-avatar').src = tutor.avatar;
+        document.getElementById('m-tutor-headline').textContent = tutor.headline;
+        document.getElementById('m-tutor-education').textContent = tutor.education;
+        document.getElementById('m-tutor-area').textContent = tutor.area;
+        document.getElementById('m-tutor-bio').textContent = tutor.bio;
+        document.getElementById('m-tutor-rate').textContent = tutor.rateLabel;
+
+        const appList = document.getElementById('m-tutor-approaches');
+        appList.innerHTML = tutor.approaches.map(a => `<li>• ${a}</li>`).join('');
+
+        const exampleBox = document.getElementById('m-tutor-example');
+        exampleBox.innerHTML = `
+          <div style="background:var(--cream); padding:8px 12px; border-radius:var(--radius-md); border:1px solid var(--border-c); font-size:0.785rem;">
+            <strong>Contoh Proyek Sesi Belajar:</strong><br/>
+            ${tutor.exampleProject}
+          </div>
+        `;
+
+        const fitBox = document.getElementById('m-tutor-fit');
+        fitBox.innerHTML = tutor.studentFit.map(f => `<span class="pill pill-sage" style="margin:2px;">✓ ${f}</span>`).join('');
+
+        document.getElementById('m-tutor-cta-book').onclick = () => {
+          this.closeModal('modal-tutor-profile');
+          this.openTutorBooking(tutor);
+        };
+
+        this.openModal('modal-tutor-profile');
+      }
+
+      openTutorBooking(tutor) {
+        document.getElementById('book-tutor-photo').src = tutor.avatar;
+        document.getElementById('book-tutor-name').textContent = tutor.name;
+        document.getElementById('book-tutor-rate').textContent = tutor.rateLabel;
+        this.openModal('modal-booking-tutor');
+      }
+
+      openBimbelProfile(bimbel) {
+        document.getElementById('m-bimbel-name').textContent = bimbel.name;
+        document.getElementById('m-bimbel-logo').src = bimbel.logo;
+        document.getElementById('m-bimbel-tagline').textContent = bimbel.tagline;
+        document.getElementById('m-bimbel-address').textContent = bimbel.address;
+        document.getElementById('m-bimbel-phone').textContent = bimbel.phone;
+        document.getElementById('m-bimbel-desc').textContent = bimbel.description;
+        document.getElementById('m-bimbel-price').textContent = bimbel.priceRange;
+
+        const fac = document.getElementById('m-bimbel-facilities');
+        fac.innerHTML = bimbel.facilities.map(f => `<span class="pill pill-sage" style="margin:2px;">✓ ${f}</span>`).join('');
+
+        const progs = document.getElementById('m-bimbel-programs');
+        progs.innerHTML = bimbel.programs.map(p => `
+          <div style="background:var(--cream); padding:6px 10px; border-radius:var(--radius-sm); margin-bottom:4px; font-size:0.785rem; border:1px solid var(--border-c);">
+            <strong>${p.name}:</strong> ${p.desc}
+          </div>
+        `).join('');
+
+        const tuts = document.getElementById('m-bimbel-tutors');
+        tuts.innerHTML = `<div style="font-size:0.785rem; color:var(--dark-c);">• ${bimbel.tutorsList.join('<br/>• ')}</div>`;
+
+        document.getElementById('m-bimbel-cta').onclick = () => {
+          this.closeModal('modal-bimbel-profile');
+          this.openBimbelInquiry(bimbel);
+        };
+
+        this.openModal('modal-bimbel-profile');
+      }
+
+      openBimbelInquiry(bimbel) {
+        document.getElementById('inq-bimbel-logo').src = bimbel.logo;
+        document.getElementById('inq-bimbel-name').textContent = bimbel.name;
+        this.openModal('modal-inquiry-bimbel');
+      }
+
+      openProgramDetail(prog) {
+        document.getElementById('m-prog-title').textContent = prog.name;
+        document.getElementById('m-prog-provider').textContent = prog.provider;
+        document.getElementById('m-prog-target').textContent = prog.target;
+        document.getElementById('m-prog-approach').textContent = prog.approach;
+        document.getElementById('m-prog-duration').textContent = prog.duration;
+        document.getElementById('m-prog-price').textContent = prog.priceLabel;
+
+        const syl = document.getElementById('m-prog-syllabus');
+        syl.innerHTML = prog.syllabus.map(s => `<li style="font-size:0.785rem; margin-bottom:4px;">• ${s}</li>`).join('');
+
+        const out = document.getElementById('m-prog-outcomes');
+        out.innerHTML = prog.outcomes.map(o => `<li style="font-size:0.785rem; margin-bottom:4px;">✓ ${o}</li>`).join('');
+
+        document.getElementById('m-prog-cta').onclick = () => {
+          this.closeModal('modal-program-detail');
+          this.showNotification('Pendaftaran program berhasil diajukan!');
+        };
+
+        this.openModal('modal-program-detail');
+      }
+
+      openOutdoorDetail(outdoorId) {
+        const outdoor = DampingData.outdoors.find(o => o.id === outdoorId) || DampingData.outdoors[0];
+        
+        document.getElementById('m-out-title').textContent = outdoor.name;
+        document.getElementById('m-out-img').src = outdoor.thumbnail;
+        document.getElementById('m-out-location').textContent = outdoor.location;
+        document.getElementById('m-out-meeting').textContent = outdoor.meetingPoint;
+        document.getElementById('m-out-schedule').textContent = outdoor.date + ' • ' + outdoor.schedule;
+        document.getElementById('m-out-capacity').innerHTML = `Kapasitas: <strong style="color:var(--sage-deep);">${outdoor.capacityLeft} Sisa Kursi</strong> dari total ${outdoor.capacityTotal} kuota`;
+        document.getElementById('m-out-curriculum').textContent = outdoor.curriculumLink;
+        document.getElementById('m-out-target').textContent = outdoor.targetAudience;
+        document.getElementById('m-out-safety').textContent = outdoor.safetyInfo;
+        document.getElementById('m-out-price').textContent = outdoor.priceLabel;
+
+        const coords = document.getElementById('m-out-coordinators');
+        coords.innerHTML = outdoor.coordinators.map(c => `
+          <div class="coordinator-card">
+            <img src="${c.avatar}" class="coordinator-avatar" onerror="this.src='https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=200&q=80'" />
+            <div>
+              <strong style="font-size:0.785rem; display:block;">${c.name}</strong>
+              <span style="font-size:0.7rem; color:var(--mid-c);">${c.role}</span>
+            </div>
+          </div>
+        `).join('');
+
+        const acts = document.getElementById('m-out-activities');
+        acts.innerHTML = outdoor.rundown.map(r => `<li style="font-size:0.785rem; margin-bottom:4px;">• ${r}</li>`).join('');
+
+        const inc = document.getElementById('m-out-fee-includes');
+        inc.innerHTML = outdoor.feeIncludes.map(f => `<span class="pill pill-sage" style="margin:2px;">✓ ${f}</span>`).join('');
+
+        const eq = document.getElementById('m-out-equipment');
+        eq.innerHTML = outdoor.equipmentNeeded.map(e => `<span class="pill pill-cream" style="margin:2px;">🎒 ${e}</span>`).join('');
+
+        const ref = document.getElementById('m-out-refund-table');
+        ref.innerHTML = `
+          <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+            <tr style="background:var(--cream); border-bottom:1px solid var(--border-c);">
+              <th style="text-align:left; padding:6px;">Waktu Pembatalan</th>
+              <th style="text-align:right; padding:6px;">Ketentuan Refund</th>
+            </tr>
+            ${outdoor.refundPolicy.map(p => `
+              <tr style="border-bottom:1px solid var(--border-c);">
+                <td style="padding:6px;">${p.window}</td>
+                <td style="text-align:right; padding:6px; font-weight:700; color:var(--sage-deep);">${p.refund}</td>
+              </tr>
+            `).join('')}
+          </table>
+        `;
+
+        document.getElementById('m-out-cta-book').onclick = () => {
+          this.closeModal('modal-outdoor-detail');
+          this.openOutdoorBooking(outdoorId);
+        };
+
+        this.openModal('modal-outdoor-detail');
+      }
+
+      openOutdoorBooking(outdoorId) {
+        const outdoor = DampingData.outdoors.find(o => o.id === outdoorId) || DampingData.outdoors[0];
+        document.getElementById('book-out-title').textContent = outdoor.name;
+        document.getElementById('book-out-schedule').textContent = '🗓️ ' + outdoor.date + ' | ' + outdoor.schedule;
+        document.getElementById('book-out-location').textContent = '📍 ' + outdoor.location;
+        document.getElementById('book-out-seats-left').textContent = outdoor.capacityLeft + ' Kursi';
+        document.getElementById('book-out-price-per').textContent = outdoor.priceLabel;
+
+        const countInput = document.getElementById('book-out-count');
+        countInput.value = 1;
+        const totalSpan = document.getElementById('book-out-total');
+        totalSpan.textContent = 'Rp ' + outdoor.price.toLocaleString('id-ID');
+
+        countInput.oninput = (e) => {
+          const val = parseInt(e.target.value) || 1;
+          const total = val * outdoor.price;
+          totalSpan.textContent = 'Rp ' + total.toLocaleString('id-ID');
+        };
+
+        this.openModal('modal-booking-outdoor');
+      }
+
+      openTicketsModal() {
+        const list = document.getElementById('m-tickets-list');
+        list.innerHTML = '';
+        if (appState.bookedTickets.length === 0) {
+          list.innerHTML = `<p style="text-align:center; color:var(--mid-c); padding:2rem;">Belum ada tiket kegiatan outdoor yang dipesan.</p>`;
+        } else {
+          appState.bookedTickets.forEach(tkt => {
+            const div = document.createElement('div');
+            div.style.cssText = 'background:var(--cream); border:1.5px solid var(--border-c); border-radius:var(--radius-lg); padding:1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;';
+            div.innerHTML = `
+              <div>
+                <span class="pill pill-sage">Tiket Aktif / Ber-QR</span>
+                <h4 class="font-serif" style="font-size:1.1rem; margin-top:4px;">${tkt.title}</h4>
+                <div style="font-size:0.75rem; color:var(--mid-c); margin-top:2px;">
+                  🗓️ ${tkt.date}<br/>
+                  📍 ${tkt.location}<br/>
+                  👶 Anak: <strong>${tkt.children}</strong>
+                </div>
+              </div>
+              <div style="text-align:center; background:#fff; padding:10px; border-radius:var(--radius-md); border:1px solid var(--border-c);">
+                <div style="font-family:monospace; font-size:0.7rem; font-weight:700;">[ QR CODE ]</div>
+                <div style="font-size:0.65rem; color:var(--sage-deep); font-weight:700; margin-top:2px;">${tkt.qrCode}</div>
+                <button class="btn btn-primary btn-sm" style="margin-top:6px; font-size:0.65rem;" onclick="window.dampingApp.openPortfolioFromTicket('${tkt.title}')">Buka Portofolio</button>
+              </div>
+            `;
+            list.appendChild(div);
+          });
+        }
+        this.openModal('modal-outdoor-tickets');
+      }
+
+      openRequestsModal() {
+        const list = document.getElementById('m-requests-list');
+        list.innerHTML = '';
+        if (appState.requests.length === 0) {
+          list.innerHTML = `<p style="text-align:center; color:var(--mid-c); padding:2rem;">Belum ada permintaan les yang diajukan.</p>`;
+        } else {
+          appState.requests.forEach(req => {
+            const div = document.createElement('div');
+            div.style.cssText = 'background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-lg); padding:1rem; margin-bottom:1rem;';
+            div.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="pill pill-cream">${req.id} • ${req.status}</span>
+                <span style="font-size:0.75rem; color:var(--sage-deep); font-weight:700;">${req.tutorName}</span>
+              </div>
+              <div style="font-size:0.8rem; color:var(--dark-c);">
+                <strong>Murid:</strong> ${req.studentName} (${req.subject})<br/>
+                <strong>Metode & Waktu:</strong> ${req.method} • ${req.day}<br/>
+                <strong>Catatan:</strong> ${req.notes}
+              </div>
+            `;
+            list.appendChild(div);
+          });
+        }
+        this.openModal('modal-parent-requests');
+      }
+
+      openParentPortalWithCode(code) {
+        const cleanCode = code.trim().toUpperCase();
+        const port = DampingPortfolios[cleanCode];
+        if (!port) {
+          this.showNotification('Kode akses siswa tidak ditemukan! Gunakan contoh: Z5C78E atau NF8821');
+          return;
+        }
+
+        document.getElementById('portal-student-name').textContent = port.studentName;
+        document.getElementById('portal-student-grade').textContent = port.grade;
+        document.getElementById('portal-code-badge').textContent = port.code;
+        document.getElementById('portal-tutor-name').textContent = port.tutorName;
+        document.getElementById('portal-attendance').textContent = port.attendance;
+        document.getElementById('portal-schedule').textContent = port.upcomingSchedule;
+        document.getElementById('portal-summary').textContent = port.teacherSummary;
+
+        document.getElementById('portal-btn-open-portfolio').onclick = () => {
+          this.closeModal('modal-parent-portal');
+          this.openPortfolioModal(cleanCode);
+        };
+
+        this.openModal('modal-parent-portal');
+      }
+
+      openPortfolioModal(code) {
+        const port = DampingPortfolios[code] || DampingPortfolios["Z5C78E"];
+        document.getElementById('m-port-student').textContent = port.studentName;
+        document.getElementById('m-port-code').textContent = port.code;
+        document.getElementById('m-port-activity').textContent = port.activityName;
+        document.getElementById('m-port-date').textContent = port.activityDate;
+        
+        const comp = document.getElementById('m-port-competencies');
+        comp.innerHTML = port.competencies.map(c => `<li style="font-size:0.785rem; margin-bottom:4px;">✓ ${c}</li>`).join('');
+
+        document.getElementById('m-port-observations').innerHTML = `<p style="font-size:0.8rem; line-height:1.5; color:#4A4031;">${port.observations}</p>`;
+
+        const str = document.getElementById('m-port-strengths');
+        str.innerHTML = port.strengths.map(s => `<li style="font-size:0.75rem;">• ${s}</li>`).join('');
+
+        const dev = document.getElementById('m-port-develop');
+        dev.innerHTML = port.development.map(d => `<li style="font-size:0.75rem;">• ${d}</li>`).join('');
+
+        document.getElementById('m-port-recommendation').textContent = port.recommendation;
+
+        document.getElementById('m-port-cta-continue').onclick = () => {
+          this.closeModal('modal-student-portfolio');
+          const tutor = DampingData.tutors.find(t => t.id === 'tutor-nadia');
+          this.openTutorProfile(tutor);
+        };
+
+        this.openModal('modal-student-portfolio');
+      }
+
+      openPortfolioFromTicket(title) {
+        this.closeModal('modal-outdoor-tickets');
+        this.openPortfolioModal('Z5C78E');
+      }
+
+      renderTutorDashboard() {
+        const container = document.getElementById('tutor-dashboard-requests');
+        container.innerHTML = '';
+        if (appState.requests.length === 0) {
+          container.innerHTML = `<div style="background:#fff; padding:2rem; text-align:center; border:1px solid var(--border-c); border-radius:var(--radius-xl); color:var(--mid-c);">Belum ada permintaan les masuk.</div>`;
+          return;
+        }
+
+        appState.requests.forEach((req, idx) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-xl); padding:1.25rem; margin-bottom:1rem; box-shadow:var(--shadow-sm);';
+          div.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div>
+                <strong style="font-size:1rem; color:var(--dark-c);">${req.studentName}</strong>
+                <span style="font-size:0.75rem; color:var(--mid-c); margin-left:6px;">(Orang Tua: ${req.parentName})</span>
+              </div>
+              <span class="pill pill-sage">${req.status}</span>
+            </div>
+            <div style="font-size:0.8rem; color:var(--mid-c); margin-bottom:10px;">
+              📱 WhatsApp: <strong>${req.phone}</strong> • Mapel: <strong>${req.subject}</strong> • Metode: <strong>${req.method}</strong> • Hari: <strong>${req.day}</strong><br/>
+              Catatan: ${req.notes}
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-primary btn-sm accept-btn">Terima Jadwal Sesi</button>
+              <button class="btn btn-outline btn-sm" onclick="alert('Permintaan dijadwalkan ulang')">Reschedule</button>
+            </div>
+          `;
+
+          div.querySelector('.accept-btn').addEventListener('click', () => {
+            appState.requests[idx].status = 'Diterima & Aktif';
+            this.showNotification('Jadwal les berhasil dikonfirmasi dan terhubung ke Portal Siswa!');
+            this.renderTutorDashboard();
+            this.updateBadges();
+          });
+
+          container.appendChild(div);
+        });
+      }
+
+      updateBadges() {
+        const tCount = document.getElementById('nav-ticket-count');
+        if (appState.bookedTickets.length > 0) {
+          tCount.style.display = 'inline-block';
+          tCount.textContent = appState.bookedTickets.length;
+        } else {
+          tCount.style.display = 'none';
+        }
+
+        const rCount = document.getElementById('nav-req-count');
+        if (appState.requests.length > 0) {
+          rCount.style.display = 'inline-block';
+          rCount.textContent = appState.requests.length;
+        } else {
+          rCount.style.display = 'none';
+        }
+      }
+
+      openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+      }
+
+      closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+      }
+
+      showNotification(message) {
+        const notif = document.createElement('div');
+        notif.style.cssText = 'position:fixed; bottom:20px; right:20px; background:var(--navy); color:#fff; padding:12px 20px; border-radius:var(--radius-lg); font-size:0.8rem; z-index:2000; box-shadow:var(--shadow-lg);';
+        notif.textContent = message;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3500);
+      }
+    }
+
+    // Initialize on Window Load
+    window.onload = function() {
+      window.dampingApp = new DampingApp();
+    };
+  </script>
 </body>
 </html>
