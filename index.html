@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damping — Personalized Learning Ecosystem &amp; Outdoor Marketplace</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. Top Simulation Notice Banner -->
+  <div class="demo-banner">
+    <span>💡</span>
+    <span>PROTOTIPE SIMULASI UI — Seluruh data profil, kuota tiket, dan refund adalah demonstrasi interaktif statis tanpa transaksi uang sungguhan.</span>
+  </div>
+
+  <!-- 2. Sticky Header & Navbar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <!-- Brand Logo -->
+      <div class="brand" onclick="window.dampingApp.switchTab('home')">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center;">
+            <span class="font-serif brand-title">Damping</span>
+            <span class="brand-pill">Ecosystem</span>
+          </div>
+          <div style="font-size:0.65rem; color:var(--mid-c); margin-top:-2px;">Personalized Learning &amp; Outdoor</div>
+        </div>
+      </div>
+
+      <!-- Center Sub-Tabs (Desktop) -->
+      <div class="nav-center-tabs">
+        <button id="tab-btn-home" class="nav-tab-btn active">
+          <span>🏠</span>
+          <span>Beranda Hub</span>
+        </button>
+        <button id="tab-btn-marketplace" class="nav-tab-btn">
+          <span>🔍</span>
+          <span>Katalog Belajar</span>
+        </button>
+      </div>
+
+      <!-- Right Action Triggers & Role Switcher -->
+      <div class="nav-right-actions">
+        <!-- Tiket Saya Quick Button -->
+        <button id="nav-btn-tickets" class="btn btn-secondary btn-sm" title="Lihat Tiket Outdoor Saya">
+          <span>🎫</span>
+          <span style="display:none;" class="sm-show">Tiket Saya</span>
+          <span id="nav-ticket-count" class="pill pill-sage" style="display:none; font-size:0.65rem; padding:1px 6px;">0</span>
+        </button>
+
+        <!-- Permintaan Les Quick Button -->
+        <button id="nav-btn-requests" class="btn btn-secondary btn-sm" title="Pantau Pengajuan Les">
+          <span>📬</span>
+          <span style="display:none;" class="sm-show">Permintaan</span>
+          <span id="nav-req-count" class="pill pill-gold" style="display:none; font-size:0.65rem; padding:1px 6px;">0</span>
+        </button>
+
+        <!-- Kode Siswa Quick Access -->
+        <button id="nav-btn-portal" class="btn btn-outline btn-sm">
+          <span>🔑</span>
+          <span>Kode Siswa</span>
+        </button>
+
+        <!-- Role Toggle (Orang Tua vs Mode Guru) -->
+        <div class="nav-center-tabs" style="margin-left:4px;">
+          <button id="btn-parent-mode" class="nav-tab-btn active-primary btn-sm">Ortu</button>
+          <button id="btn-tutor-mode" class="nav-tab-btn btn-sm">Guru</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VIEW 1: PARENT LANDING HUB (Beranda Hub Orang Tua)
+       ========================================================================= -->
+  <main id="home-view">
+    <!-- Hero Title Box -->
+    <section class="hero-hub">
+      <div class="container">
+        <div class="hero-title-box">
+          <div class="pill pill-sage" style="margin-bottom:0.75rem;">
+            <span>✨</span>
+            <span>Ekosistem Personalized Learning Damping</span>
+          </div>
+          <h1 class="font-serif hero-headline">
+            Belajar Bermakna yang Sesuai dengan Kebutuhan Unik Setiap Anak
+          </h1>
+          <p class="hero-subline">
+            Mempertemukan anak, orang tua, guru privat mandiri, dan lembaga bimbel dalam satu ekosistem: dari penguatan konsep akademik, program topik spesifik, hingga kegiatan eksplorasi outdoor.
+          </p>
+        </div>
+
+        <!-- TWO MAIN GATEWAY CHOICES (Section 2 Prompt) -->
+        <div class="gateways-grid">
+          
+          <!-- GATEWAY A: Masuk & Pantau Anak (Kode Akses Siswa 6-Digit) -->
+          <div class="gateway-card gateway-card-a">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div class="gateway-icon-box">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                    <path d="m21 2-9.6 9.6"></path>
+                    <path d="m15.5 7.5 3 3"></path>
+                  </svg>
+                </div>
+                <span class="pill pill-cream">PENGGUNA BERJALAN</span>
+              </div>
+              <h2 class="font-serif gateway-card-title">A. Masuk &amp; Pantau Anak</h2>
+              <p class="gateway-card-desc">
+                Khusus untuk orang tua yang putra/putrinya sudah aktif mengikuti bimbingan les di Damping. Masuk langsung menggunakan kode akses siswa 6 digit tanpa registrasi akun baru.
+              </p>
+              
+              <!-- 6-digit Code Input Form -->
+              <div class="code-input-group">
+                <input type="text" id="input-gateway-code" class="code-input" placeholder="Z5C78E" maxlength="6" value="Z5C78E" />
+                <button id="btn-gateway-login" class="btn btn-primary">
+                  <span>Masuk Portal</span>
+                  <span>→</span>
+                </button>
+              </div>
+
+              <!-- Quick Demo Access Code Pills -->
+              <div class="code-pill-list">
+                <span>Contoh Kode Demo:</span>
+                <button class="code-pill-btn" onclick="window.dampingApp.openParentPortalWithCode('Z5C78E')">Z5C78E (Farel - SD)</button>
+                <button class="code-pill-btn" onclick="window.dampingApp.openParentPortalWithCode('NF8821')">NF8821 (Aisyah - SMP)</button>
+              </div>
+            </div>
+
+            <div style="padding-top:1.25rem; border-top:1px solid var(--border-c); margin-top:1.25rem; font-size:0.75rem; color:var(--mid-c);">
+              ✓ Pantau jadwal belajar harian • Rekam portofolio perkembangan • Presensi sesi les
+            </div>
+          </div>
+
+          <!-- GATEWAY B: Cari Guru, Bimbel, atau Kegiatan Belajar -->
+          <div class="gateway-card gateway-card-b">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div class="gateway-icon-box">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                  </svg>
+                </div>
+                <span class="pill pill-navy">TEMUKAN LAYANAN BARU</span>
+              </div>
+              <h2 class="font-serif gateway-card-title">B. Cari Guru, Bimbel, atau Kegiatan</h2>
+              <p class="gateway-card-desc">
+                Temukan guru privat mandiri terdekat, lembaga bimbel resmi, paket program belajar spesifik per topik, dan kegiatan outdoor eksperimen sains di sekitar wilayah Anda.
+              </p>
+
+              <!-- Category quick links -->
+              <div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1.25rem;">
+                <span class="pill pill-sage">🎓 Guru Privat</span>
+                <span class="pill pill-navy">🏢 Lembaga Bimbel</span>
+                <span class="pill pill-gold">🎯 Paket Topik</span>
+                <span class="pill pill-sage">🌿 Kegiatan Outdoor</span>
+              </div>
+            </div>
+
+            <div>
+              <button id="btn-gateway-explore" class="btn btn-dark btn-lg" style="width:100%;">
+                <span>Eksplorasi Katalog Belajar</span>
+                <span>→</span>
+              </button>
+              <div style="text-align:center; font-size:0.72rem; color:var(--mid-c); margin-top:0.6rem;">
+                Bebas filter per topik matematika, IPA, area kecamatan, dan metode belajar
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FEATURED FLAGSHIP: KEGIATAN OUTDOOR (Section 4 Prompt) -->
+        <div class="featured-outdoor-banner">
+          <div class="featured-outdoor-media">
+            <img src="assets/images/outdoor-ragunan.jpg" alt="Misi Naturalis Ragunan" class="featured-outdoor-img" onerror="this.src='assets/images/outdoor-ragunan.jpg'"/>
+            <div style="position:absolute; top:12px; left:12px;">
+              <span class="pill pill-cream" style="box-shadow:var(--shadow-sm);">🌿 FITUR UNGGULAN OUTDOOR</span>
+            </div>
+            <div style="position:absolute; bottom:12px; left:12px;">
+              <span class="seat-badge seat-available" style="font-size:0.75rem; padding:4px 10px;">Sisa 4 Kursi Tersisa</span>
+            </div>
+          </div>
+          <div class="featured-outdoor-content">
+            <div>
+              <div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:var(--mid-c); margin-bottom:4px;">
+                <span>🗓️ 15 November 2026</span>
+                <span>•</span>
+                <span>⏰ 08:00 – 10:00 WIB</span>
+              </div>
+              <h3 class="font-serif" style="font-size:1.4rem; line-height:1.25; margin-bottom:0.5rem;">
+                Misi Naturalis — Mengenal Ekosistem &amp; Adaptasi Satwa
+              </h3>
+              <div style="font-size:0.785rem; color:var(--mid-c); margin-bottom:0.75rem;">
+                📍 <strong>Taman Margasatwa Ragunan, Jakarta Selatan</strong> (Pintu Barat Primata Schmutzer)
+              </div>
+              <p style="font-size:0.8rem; color:#4A4031; line-height:1.5; margin-bottom:0.85rem;">
+                Observasi lapangan langsung, misi detektif ekosistem satwa, dan pencatatan jurnal ilmiah yang dihubungkan dengan konsep materi IPA Kurikulum Merdeka Fase B &amp; C.
+              </p>
+              
+              <!-- 2 Coordinators Highlight -->
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem; background:var(--cream); padding:8px 12px; border-radius:var(--radius-md); border:1px solid var(--border-c);">
+                <div style="font-size:0.75rem;">
+                  <strong>👥 2 Pendamping Komplementer:</strong><br/>
+                  • <strong>Kak Nadia Rahma, S.Si.</strong> (Eksplorasi Alam &amp; Observasi Lapangan)<br/>
+                  • <strong>Kak Dimas Prasetyo, S.Pd.</strong> (Refleksi &amp; Konsep IPA Sekolah)
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:0.85rem; border-top:1px solid var(--border-c);">
+              <div>
+                <div style="font-size:1.2rem; font-weight:700; color:var(--sage-deep);">Rp 150.000 <span style="font-size:0.75rem; font-weight:normal; color:var(--mid-c);">/ anak</span></div>
+                <div style="font-size:0.7rem; color:var(--mid-c);">Termasuk tiket masuk, jurnal misi, snack &amp; portofolio</div>
+              </div>
+              <div style="display:flex; gap:0.5rem;">
+                <button class="btn btn-outline" onclick="window.dampingApp.openOutdoorDetail('outdoor-naturalis-ragunan')">
+                  Lihat Detail &amp; Silabus
+                </button>
+                <button class="btn btn-primary" onclick="window.dampingApp.openOutdoorBooking('outdoor-naturalis-ragunan')">
+                  Pesan Tiket
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 DAMPING LEARNING PRINCIPLES -->
+        <div class="principles-box">
+          <div style="text-align:center; max-width:600px; margin:0 auto;">
+            <span class="pill pill-sage">FILOSOFI PENDIDIKAN</span>
+            <h3 class="font-serif" style="font-size:1.25rem; margin-top:4px;">7 Prinsip Pembelajaran Damping</h3>
+            <p style="font-size:0.75rem; color:var(--mid-c);">Bukan sekadar perantara les, melainkan ekosistem tumbuh kembang anak secara utuh.</p>
+          </div>
+          <div class="principles-grid">
+            <div class="principle-item">
+              <span class="principle-num">1</span>
+              <div>
+                <strong style="font-size:0.8rem;">Kebutuhan Unik Anak</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Setiap anak belajar dengan kecepatan, minat, dan cara berpikir yang berbeda.</p>
+              </div>
+            </div>
+            <div class="principle-item">
+              <span class="principle-num">2</span>
+              <div>
+                <strong style="font-size:0.8rem;">Kebebasan Guru Berkreasi</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Guru berhak merancang metode, pendekatan kontekstual, dan programnya sendiri.</p>
+              </div>
+            </div>
+            <div class="principle-item">
+              <span class="principle-num">3</span>
+              <div>
+                <strong style="font-size:0.8rem;">Pilihan Fleksibel Orang Tua</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Memilih guru/lembaga berdasarkan topik spesifik, metode, lokasi, dan jenjang.</p>
+              </div>
+            </div>
+            <div class="principle-item">
+              <span class="principle-num">4</span>
+              <div>
+                <strong style="font-size:0.8rem;">Pembelajaran Beragam</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Menggabungkan sains nyata, permainan, proyek mandiri, dan kegiatan alam bebas.</p>
+              </div>
+            </div>
+            <div class="principle-item">
+              <span class="principle-num">5</span>
+              <div>
+                <strong style="font-size:0.8rem;">Portofolio Berkelanjutan</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Kemajuan anak didokumentasikan untuk menentukan langkah pembelajaran selanjutnya.</p>
+              </div>
+            </div>
+            <div class="principle-item">
+              <span class="principle-num">6</span>
+              <div>
+                <strong style="font-size:0.8rem;">Dukung Target Sekolah</strong>
+                <p style="font-size:0.72rem; color:var(--mid-c);">Belajar aktif tetap selaras dengan kurikulum sekolah, latihan soal, dan persiapan ujian.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       VIEW 2: MARKETPLACE CATALOG (Katalog Belajar)
+       ========================================================================= -->
+  <main id="marketplace-view" class="hidden">
+    <!-- Search Header with Preset Locations -->
+    <section class="search-header">
+      <div class="container search-header-row">
+        <div>
+          <h2 class="font-serif" style="font-size:1.35rem;">Eksplorasi Pembelajaran Personalized</h2>
+          <p style="font-size:0.75rem; color:var(--mid-c);">Pilih titik wilayah Anda untuk menghitung radius dan jarak layanan belajar</p>
+        </div>
+        
+        <!-- Location Picker -->
+        <div class="location-selector">
+          <span>📍</span>
+          <select id="location-select" class="location-select">
+            <option value="Tebet">Tebet, Jakarta Selatan</option>
+            <option value="Kemang">Kemang, Jakarta Selatan</option>
+            <option value="Kebayoran Baru">Kebayoran Baru, Jakarta Selatan</option>
+            <option value="Bintaro">Bintaro Sektor 7-9, Tangerang Selatan</option>
+            <option value="BSD City">BSD City, Tangerang Selatan</option>
+            <option value="Margonda">Margonda, Depok</option>
+            <option value="Dago">Dago - Coblong, Bandung</option>
+            <option value="Kelapa Gading">Kelapa Gading, Jakarta Utara</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Bar: 5 Segmented Categories & Filter Selectors -->
+    <section class="filter-bar">
+      <div class="container">
+        <!-- Row 1: 5 Categories -->
+        <div class="filter-row-categories">
+          <button class="cat-btn active" data-category="all">
+            <span>📚</span>
+            <span>Semua Layanan</span>
+          </button>
+          <button class="cat-btn" data-category="guru_privat">
+            <span>🎓</span>
+            <span>Guru Privat</span>
+          </button>
+          <button class="cat-btn" data-category="lembaga_bimbel">
+            <span>🏢</span>
+            <span>Lembaga Bimbel</span>
+          </button>
+          <button class="cat-btn" data-category="program_belajar">
+            <span>🎯</span>
+            <span>Program Belajar</span>
+          </button>
+          <button class="cat-btn" data-category="kegiatan_outdoor">
+            <span>🌿</span>
+            <span>Kegiatan Outdoor</span>
+          </button>
+        </div>
+
+        <!-- Row 2: Sub-filters -->
+        <div class="filter-row-selectors">
+          <!-- Subject -->
+          <select id="filter-subject" class="filter-select">
+            <option value="">Semua Mapel</option>
+            <option value="Matematika">Matematika</option>
+            <option value="IPA">IPA &amp; Sains</option>
+            <option value="Fisika">Fisika</option>
+            <option value="Biologi">Biologi</option>
+            <option value="Bahasa Inggris">Bahasa Inggris</option>
+            <option value="Coding Anak">Coding Anak</option>
+            <option value="Calistung">Calistung</option>
+          </select>
+
+          <!-- Topic / Submateri -->
+          <select id="filter-topic" class="filter-select">
+            <option value="">Semua Topik Spesifik</option>
+            <option value="Pecahan">Pecahan &amp; Desimal</option>
+            <option value="Persamaan Kuadrat">Persamaan Kuadrat</option>
+            <option value="Ekosistem & Sains">Ekosistem &amp; Sains</option>
+            <option value="TPS SNBT">TPS SNBT 2027</option>
+            <option value="Coding Scratch">Coding Scratch</option>
+            <option value="Aljabar">Aljabar</option>
+          </select>
+
+          <!-- Level -->
+          <select id="filter-level" class="filter-select">
+            <option value="">Semua Jenjang</option>
+            <option value="PAUD">PAUD / TK</option>
+            <option value="SD">SD</option>
+            <option value="SMP">SMP</option>
+            <option value="SMA">SMA</option>
+            <option value="UTBK">UTBK / SBMPTN</option>
+          </select>
+
+          <!-- Method -->
+          <select id="filter-method" class="filter-select">
+            <option value="">Semua Metode</option>
+            <option value="tatap_muka">Tatap Muka di Rumah / Cabang</option>
+            <option value="online">Online Interaktif</option>
+            <option value="outdoor">Outdoor Lapangan</option>
+          </select>
+
+          <!-- Learning Goal -->
+          <select id="filter-goal" class="filter-select">
+            <option value="">Semua Tujuan Belajar</option>
+            <option value="penguatan_dasar">Penguatan Konsep Dasar</option>
+            <option value="persiapan_ujian">Persiapan Ujian &amp; SNBT</option>
+            <option value="proyek_eksplorasi">Proyek Nyata &amp; Eksplorasi</option>
+            <option value="minat_bakat">Minat &amp; Bakat Khusus</option>
+          </select>
+
+          <!-- Max Rate Slider -->
+          <div style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; background:#fff; padding:4px 12px; border-radius:var(--radius-full); border:1px solid var(--border-c);">
+            <span style="color:var(--mid-c);">Maks:</span>
+            <input type="range" id="filter-rate-range" min="80000" max="250000" step="10000" value="250000" style="width:70px; cursor:pointer;" />
+            <strong id="rate-val-label" style="color:var(--sage-deep);">Rp 250.000</strong>
+          </div>
+
+          <!-- Sort -->
+          <select id="filter-sort" class="filter-select">
+            <option value="distance">Urutkan: Terdekat Lokasi</option>
+            <option value="rate_asc">Tarif: Terendah ke Tertinggi</option>
+            <option value="rate_desc">Tarif: Tertinggi ke Terendah</option>
+            <option value="experience">Pengalaman Terbanyak</option>
+          </select>
+
+          <!-- Reset -->
+          <button id="btn-reset-filters" class="btn btn-secondary btn-sm" title="Reset Semua Filter">
+            ↺ Reset
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section & Summary Bar -->
+    <div class="container">
+      <div class="results-summary-bar">
+        <div>
+          <h2 id="results-title" class="font-serif" style="font-size:1.25rem;">Katalog Pembelajaran Personalized</h2>
+          <p id="results-count-desc" style="font-size:0.75rem; color:var(--mid-c); margin-top:2px;">Memuat data...</p>
+        </div>
+
+        <!-- Mobile List vs Map Toggle Buttons -->
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <div class="nav-center-tabs" style="display:inline-flex;" class="lg-hide">
+            <button id="mobile-list-btn" class="nav-tab-btn active btn-sm">📋 Daftar</button>
+            <button id="mobile-map-btn" class="nav-tab-btn btn-sm">🗺️ Peta</button>
+          </div>
+          <div class="pill pill-sage" style="display:none;" class="md-show">
+            ✓ Transparansi Profil &amp; Kurikulum Damping
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Column Catalog Layout (60% Cards List + 40% Sticky Map) -->
+      <div class="catalog-layout">
+        
+        <!-- LEFT COLUMN: Results Cards -->
+        <div class="catalog-left-column">
+          <div id="cards-container">
+            <!-- Dynamic Cards Injected Here via JavaScript -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="empty-state" class="hidden" style="text-align:center; padding:3rem 1rem; background:#fff; border:1px solid var(--border-c); border-radius:var(--radius-xl);">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔍</div>
+            <h3 class="font-serif" style="font-size:1.25rem;">Tidak Ditemukan Hasil yang Cocok</h3>
+            <p style="font-size:0.8rem; color:var(--mid-c); margin-top:4px;">Coba atur ulang filter mata pelajaran, topik spesifik, atau perluas batas tarif maksimum.</p>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Sticky Companion Interactive Map -->
+        <div class="catalog-right-column">
+          <div class="map-container-box">
+            <div class="map-header">
+              <span>🗺️ Peta Sebaran Layanan Belajar</span>
+              <span class="pill pill-sage" style="font-size:0.65rem;">Radius Terhitung</span>
+            </div>
+            <div id="map-canvas" class="map-view-canvas">
+              <!-- Visual Simulated Map Canvas Injected Here -->
+            </div>
+            <div style="padding:6px 12px; background:var(--cream-2); font-size:0.7rem; font-weight:700; color:var(--mid-c); border-top:1px solid var(--border-c);">
+              Titik Pembelajaran Terdekat:
+            </div>
+            <div id="map-pins-list" class="map-pins-list">
+              <!-- Dynamic Map Pin List -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       VIEW 3: TUTOR DASHBOARD VIEW (Mode Guru)
+       ========================================================================= -->
+  <main id="tutor-dashboard-view" class="hidden">
+    <div class="container" style="padding-top:2rem; padding-bottom:3rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem;">
+        <div>
+          <span class="pill pill-sage">PANEL PENGAJAR</span>
+          <h2 class="font-serif" style="font-size:1.6rem; margin-top:4px;">Dashboard Guru &amp; Bimbel</h2>
+          <p style="font-size:0.8rem; color:var(--mid-c);">Kelola permintaan les masuk dari orang tua dan atur jadwal bimbingan belajar.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="window.dampingApp.switchTab('home')">
+          ← Kembali ke Mode Orang Tua
+        </button>
+      </div>
+
+      <div style="max-width:800px; margin:0 auto;">
+        <h3 class="font-serif" style="font-size:1.2rem; margin-bottom:1rem;">Permintaan Les Masuk (Menunggu Respon)</h3>
+        <div id="tutor-dashboard-requests">
+          <!-- Pending Requests Rendered Here -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       MODALS SYSTEM (All Interactive Dialogs)
+       ========================================================================= -->
+
+  <!-- MODAL 1: Tutor Profile Modal -->
+  <div id="modal-tutor-profile" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 id="m-tutor-name" class="font-serif">Profil Guru Privat</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-tutor-profile')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; gap:1rem; margin-bottom:1rem; align-items:flex-start;">
+          <img id="m-tutor-avatar" src="assets/images/tutor-nadia.jpg" style="width:72px; height:72px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
+          <div>
+            <div id="m-tutor-headline" style="font-size:0.85rem; font-weight:600; color:var(--dark-c); margin-bottom:4px;"></div>
+            <div style="font-size:0.75rem; color:var(--mid-c);">
+              🎓 <span id="m-tutor-education"></span><br/>
+              📍 Area: <span id="m-tutor-area"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); font-size:0.8rem; margin-bottom:1rem; border:1px solid var(--border-c);">
+          <strong>Tentang Pendekatan Mengajar:</strong>
+          <p id="m-tutor-bio" style="margin-top:4px; line-height:1.5; color:#4A4031;"></p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Metode Belajar Aktif yang Diterapkan:</h4>
+          <ul id="m-tutor-approaches" style="list-style:none; padding:0; font-size:0.785rem; color:var(--dark-c);"></ul>
+        </div>
+
+        <div id="m-tutor-example" style="margin-bottom:1rem;"></div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Kecocokan Preferensi Karakter Anak:</h4>
+          <div id="m-tutor-fit" style="display:flex; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-md); padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-size:0.7rem; color:var(--mid-c);">Tarif Per Sesi:</span>
+            <div id="m-tutor-rate" style="font-size:1.1rem; font-weight:700; color:var(--sage-deep);"></div>
+          </div>
+          <button id="m-tutor-cta-book" class="btn btn-primary">Ajukan Permintaan Les</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Tutor Booking Request Form -->
+  <div id="modal-booking-tutor" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="font-serif">Ajukan Permintaan Les Privat</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-booking-tutor')">✕</button>
+      </div>
+      <form id="form-booking-tutor">
+        <div class="modal-body">
+          <div style="display:flex; gap:10px; align-items:center; background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-c);">
+            <img id="book-tutor-photo" src="assets/images/tutor-nadia.jpg" style="width:44px; height:44px; border-radius:50%; object-fit:cover;" />
+            <div>
+              <strong id="book-tutor-name" style="font-size:0.9rem;"></strong>
+              <div id="book-tutor-rate" style="font-size:0.75rem; color:var(--sage-deep); font-weight:700;"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap Murid</label>
+            <input type="text" id="book-student-name" class="form-input" value="Farel Pratama" required />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Nama Orang Tua</label>
+              <input type="text" id="book-parent-name" class="form-input" value="Ibu Ratna Wardani" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">No. WhatsApp</label>
+              <input type="text" id="book-parent-phone" class="form-input" value="0812-3456-7890" required />
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Mata Pelajaran</label>
+              <select id="book-subject" class="form-select">
+                <option value="Matematika">Matematika</option>
+                <option value="IPA">IPA &amp; Sains</option>
+                <option value="Bahasa Inggris">Bahasa Inggris</option>
+                <option value="Coding Anak">Coding Anak</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Metode Belajar</label>
+              <select id="book-method" class="form-select">
+                <option value="tatap_muka">Tatap Muka di Rumah</option>
+                <option value="online">Online Interaktif</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pilihan Hari yang Diinginkan</label>
+            <select id="book-day" class="form-select">
+              <option value="Senin">Senin (Sore)</option>
+              <option value="Rabu" selected>Rabu (Sore)</option>
+              <option value="Sabtu">Sabtu (Pagi)</option>
+              <option value="Minggu">Minggu (Pagi)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Catatan Kebutuhan Belajar Anak</label>
+            <textarea id="book-notes" class="form-textarea" rows="2" placeholder="Contoh: Butuh penguatan soal cerita pecahan dan persiapan ulangan"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.dampingApp.closeModal('modal-booking-tutor')">Batal</button>
+          <button type="submit" class="btn btn-primary">Kirimkan Pengajuan Les</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Bimbel Profile Modal -->
+  <div id="modal-bimbel-profile" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 id="m-bimbel-name" class="font-serif">Info Cabang Bimbel</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-bimbel-profile')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; gap:1rem; align-items:flex-start; margin-bottom:1rem;">
+          <img id="m-bimbel-logo" src="assets/images/bimbel-nf.jpg" style="width:64px; height:64px; border-radius:var(--radius-lg); object-fit:cover; border:2px solid var(--border-c);" />
+          <div>
+            <div id="m-bimbel-tagline" style="font-size:0.8rem; font-weight:700; color:var(--navy);"></div>
+            <div style="font-size:0.75rem; color:var(--mid-c); margin-top:2px;">
+              📍 <span id="m-bimbel-address"></span><br/>
+              📞 Telp: <span id="m-bimbel-phone"></span>
+            </div>
+          </div>
+        </div>
+
+        <p id="m-bimbel-desc" style="font-size:0.8rem; line-height:1.5; color:#4A4031; margin-bottom:1rem;"></p>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Fasilitas Cabang:</h4>
+          <div id="m-bimbel-facilities" style="display:flex; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Program Bimbingan Reguler:</h4>
+          <div id="m-bimbel-programs"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Tim Tutor Resmi Cabang:</h4>
+          <div id="m-bimbel-tutors"></div>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-md); padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-size:0.7rem; color:var(--mid-c);">Kisaran Biaya:</span>
+            <div id="m-bimbel-price" style="font-size:1rem; font-weight:700; color:var(--navy);"></div>
+          </div>
+          <button id="m-bimbel-cta" class="btn btn-primary">Konsultasi Pendaftaran</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Bimbel Inquiry Modal -->
+  <div id="modal-inquiry-bimbel" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="font-serif">Formulir Konsultasi Bimbel</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-inquiry-bimbel')">✕</button>
+      </div>
+      <form id="form-inquiry-bimbel">
+        <div class="modal-body">
+          <div style="display:flex; gap:10px; align-items:center; background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-c);">
+            <img id="inq-bimbel-logo" src="assets/images/bimbel-nf.jpg" style="width:40px; height:40px; border-radius:var(--radius-md); object-fit:cover;" />
+            <strong id="inq-bimbel-name" style="font-size:0.9rem; color:var(--navy);"></strong>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Murid</label>
+            <input type="text" id="inq-student-name" class="form-input" value="Farel Pratama" required />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Nama Orang Tua</label>
+              <input type="text" id="inq-parent-name" class="form-input" value="Ibu Ratna Wardani" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">No. WhatsApp</label>
+              <input type="text" id="inq-parent-phone" class="form-input" value="0812-3456-7890" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Jenjang Pendidikan</label>
+            <select id="inq-level" class="form-select">
+              <option value="SD">SD</option>
+              <option value="SMP" selected>SMP</option>
+              <option value="SMA">SMA</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pertanyaan / Kebutuhan Kelas</label>
+            <textarea id="inq-notes" class="form-textarea" rows="2" placeholder="Ingin tanya jadwal kelas intensif dan konsultasi PR harian"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.dampingApp.closeModal('modal-inquiry-bimbel')">Batal</button>
+          <button type="submit" class="btn btn-primary">Kirimkan Permintaan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 5: Program Detail Modal -->
+  <div id="modal-program-detail" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 id="m-prog-title" class="font-serif">Detail Paket Program</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-program-detail')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); font-size:0.785rem; margin-bottom:1rem; border:1px solid var(--border-c);">
+          <div>Penyelenggara: <strong id="m-prog-provider"></strong></div>
+          <div>Sasaran Belajar: <strong id="m-prog-target" style="color:var(--gold-dark);"></strong></div>
+          <div>Metode: <strong id="m-prog-approach"></strong></div>
+          <div>Durasi Paket: <strong id="m-prog-duration"></strong></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Rincian Silabus &amp; Aktivitas Sesi:</h4>
+          <ul id="m-prog-syllabus" style="list-style:none; padding:0;"></ul>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Capaian yang Diharapkan:</h4>
+          <ul id="m-prog-outcomes" style="list-style:none; padding:0;"></ul>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-md); padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-size:0.7rem; color:var(--mid-c);">Total Biaya Paket:</span>
+            <div id="m-prog-price" style="font-size:1.1rem; font-weight:700; color:var(--gold-dark);"></div>
+          </div>
+          <button id="m-prog-cta" class="btn btn-primary">Daftar Paket Program</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 6: Outdoor Detail Modal (With 2 Coordinators & Refund Table) -->
+  <div id="modal-outdoor-detail" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 id="m-out-title" class="font-serif">Detail Kegiatan Outdoor</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-outdoor-detail')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="position:relative; height:180px; width:100%; border-radius:var(--radius-lg); overflow:hidden; margin-bottom:1rem;">
+          <img id="m-out-img" src="assets/images/outdoor-ragunan.jpg" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/images/outdoor-ragunan.jpg'"/>
+        </div>
+
+        <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); font-size:0.785rem; margin-bottom:1rem; border:1px solid var(--border-c);">
+          <div>📍 Lokasi: <strong id="m-out-location"></strong></div>
+          <div>🚩 Titik Kumpul: <strong id="m-out-meeting"></strong></div>
+          <div>🗓️ Waktu: <strong id="m-out-schedule"></strong></div>
+          <div id="m-out-capacity" style="margin-top:4px;"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">👥 Profil 2 Pendamping Kegiatan:</h4>
+          <div id="m-out-coordinators" class="coordinators-grid"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Kaitan Kompetensi Kurikulum Sekolah:</h4>
+          <p id="m-out-curriculum" style="font-size:0.785rem; color:#4A4031; line-height:1.5;"></p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Sasaran Peserta &amp; Usia:</h4>
+          <p id="m-out-target" style="font-size:0.785rem; color:#4A4031; line-height:1.5;"></p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Rundown Aktivitas:</h4>
+          <ul id="m-out-activities" style="list-style:none; padding:0;"></ul>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Fasilitas Termasuk:</h4>
+          <div id="m-out-fee-includes" style="display:flex; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Perlengkapan yang Perlu Dibawa:</h4>
+          <div id="m-out-equipment" style="display:flex; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Informasi Keselamatan &amp; Pengawasan:</h4>
+          <p id="m-out-safety" style="font-size:0.785rem; color:var(--mid-c);"></p>
+        </div>
+
+        <!-- Pre-checkout Transparent Refund Policy Table -->
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">📋 Ketentuan Pembatalan &amp; Pengembalian Dana:</h4>
+          <div id="m-out-refund-table"></div>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-md); padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-size:0.7rem; color:var(--mid-c);">Harga Tiket:</span>
+            <div id="m-out-price" style="font-size:1.15rem; font-weight:700; color:var(--sage-deep);"></div>
+          </div>
+          <button id="m-out-cta-book" class="btn btn-primary">Pesan Tiket Sekarang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 7: Train-Style Outdoor Booking Modal -->
+  <div id="modal-booking-outdoor" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="font-serif">Pemesanan Tiket Kegiatan Outdoor</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-booking-outdoor')">✕</button>
+      </div>
+      <form id="form-booking-outdoor">
+        <div class="modal-body">
+          <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-c); font-size:0.785rem;">
+            <div id="book-out-title" style="font-weight:700; font-size:0.9rem; color:var(--dark-c);"></div>
+            <div id="book-out-schedule" style="color:var(--mid-c); margin-top:2px;"></div>
+            <div id="book-out-location" style="color:var(--mid-c);"></div>
+            <div style="margin-top:6px;">
+              Sisa Kursi: <strong id="book-out-seats-left" style="color:var(--sage-deep);"></strong> • 
+              Harga: <strong id="book-out-price-per"></strong> / anak
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jumlah Anak yang Didaftarkan</label>
+            <input type="number" id="book-out-count" class="form-input" min="1" max="12" value="1" required />
+            <span style="font-size:0.7rem; color:var(--mid-c);">Kapasitas sistem divalidasi langsung untuk mencegah overbooking.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Anak (Pisahkan dengan koma jika lebih dari 1)</label>
+            <input type="text" id="book-out-children-names" class="form-input" value="Farel Pratama (Kelas 5 SD)" required />
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Nama Orang Tua</label>
+              <input type="text" id="book-out-parent-name" class="form-input" value="Ibu Ratna Wardani" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">No. WhatsApp</label>
+              <input type="text" id="book-out-parent-phone" class="form-input" value="0812-3456-7890" required />
+            </div>
+          </div>
+
+          <div style="background:#FFF9EE; border:1px solid #ECDAB5; padding:10px 12px; border-radius:var(--radius-md); font-size:0.72rem; color:#7A5E24; margin-bottom:1rem;">
+            ⚠️ <strong>Simulasi Pembayaran:</strong> Tidak ada penarikan dana sungguhan. Tiket demo ber-QR langsung diterbitkan setelah konfirmasi.
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#fff; padding:10px 14px; border:1px solid var(--border-c); border-radius:var(--radius-md);">
+            <span style="font-size:0.8rem; font-weight:700;">Total Biaya Simulasi:</span>
+            <span id="book-out-total" style="font-size:1.2rem; font-weight:700; color:var(--sage-deep);">Rp 150.000</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.dampingApp.closeModal('modal-booking-outdoor')">Batal</button>
+          <button type="submit" class="btn btn-primary">Konfirmasi &amp; Terbitkan Tiket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 8: Outdoor Tickets View ("Tiket Saya") -->
+  <div id="modal-outdoor-tickets" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 class="font-serif">Tiket Kegiatan Outdoor Saya</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-outdoor-tickets')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="m-tickets-list">
+          <!-- Dynamic List of Tickets -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 9: Student Portfolio Modal & Continuity -->
+  <div id="modal-student-portfolio" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 class="font-serif">Portofolio Pembelajaran Anak</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-student-portfolio')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--cream); padding:10px 14px; border-radius:var(--radius-md); font-size:0.8rem; margin-bottom:1rem; border:1px solid var(--border-c); display:flex; justify-content:space-between;">
+          <div>
+            Murid: <strong id="m-port-student"></strong> (<span id="m-port-code"></span>)<br/>
+            Kegiatan: <strong id="m-port-activity"></strong>
+          </div>
+          <div style="text-align:right; font-size:0.75rem; color:var(--mid-c);">
+            Tanggal Selesai:<br/><span id="m-port-date"></span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Capaian Kompetensi di Lapangan:</h4>
+          <ul id="m-port-competencies" style="list-style:none; padding:0;"></ul>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <h4 class="font-serif" style="font-size:0.95rem; margin-bottom:0.4rem;">Catatan Pengamatan 2 Pendamping Guru:</h4>
+          <div id="m-port-observations"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
+          <div style="background:#E8F0E8; border:1px solid rgba(92,138,107,0.3); border-radius:var(--radius-md); padding:10px;">
+            <strong style="color:var(--sage-deep); font-size:0.8rem;">Hal yang Sudah Dikuasai:</strong>
+            <ul id="m-port-strengths" style="list-style:none; padding:0; margin-top:4px;"></ul>
+          </div>
+          <div style="background:#FFF5E5; border:1px solid rgba(201,168,76,0.4); border-radius:var(--radius-md); padding:10px;">
+            <strong style="color:var(--gold-dark); font-size:0.8rem;">Hal yang Masih Perlu Dilatih:</strong>
+            <ul id="m-port-develop" style="list-style:none; padding:0; margin-top:4px;"></ul>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid var(--border-c); border-radius:var(--radius-md); padding:12px; margin-bottom:1rem;">
+          <div style="font-size:0.75rem; color:var(--mid-c); margin-bottom:2px;">Saran Kelanjutan Belajar:</div>
+          <p id="m-port-recommendation" style="font-size:0.8rem; line-height:1.5; color:var(--dark-c);"></p>
+        </div>
+
+        <!-- Prominent Tutoring Continuity Button (Prompt Section 7) -->
+        <div style="display:flex; justify-content:center;">
+          <button id="m-port-cta-continue" class="btn btn-primary btn-lg" style="width:100%;">
+            Lanjutkan Les dengan Guru Ini (Kak Nadia Rahma)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 10: Parent Portal View (From 6-Digit Code) -->
+  <div id="modal-parent-portal" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 class="font-serif">Portal Pantau Anak (Damping)</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-parent-portal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--cream); padding:12px 16px; border-radius:var(--radius-md); border:1px solid var(--border-c); margin-bottom:1rem;">
+          <div>
+            <h3 id="portal-student-name" class="font-serif" style="font-size:1.25rem;"></h3>
+            <div id="portal-student-grade" style="font-size:0.75rem; color:var(--mid-c);"></div>
+          </div>
+          <div style="text-align:right;">
+            <span class="pill pill-sage">Kode Akses Siswa</span>
+            <div id="portal-code-badge" style="font-family:monospace; font-size:1.2rem; font-weight:700; margin-top:2px;"></div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
+          <div style="background:#fff; border:1px solid var(--border-c); border-radius:var(--radius-md); padding:10px 12px;">
+            <span style="font-size:0.7rem; color:var(--mid-c);">Pengajar Pendamping Aktif:</span>
+            <div id="portal-tutor-name" style="font-weight:700; font-size:0.85rem; color:var(--dark-c); margin-top:2px;"></div>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-c); border-radius:var(--radius-md); padding:10px 12px;">
+            <span style="font-size:0.7rem; color:var(--mid-c);">Tingkat Kehadiran:</span>
+            <div id="portal-attendance" style="font-weight:700; font-size:0.85rem; color:var(--sage-deep); margin-top:2px;"></div>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid var(--border-c); border-radius:var(--radius-md); padding:12px; margin-bottom:1rem;">
+          <span style="font-size:0.7rem; color:var(--mid-c);">Jadwal Sesi Mendatang:</span>
+          <div id="portal-schedule" style="font-weight:700; font-size:0.85rem; color:var(--dark-c); margin-top:2px;"></div>
+        </div>
+
+        <div style="background:#fff; border:1px solid var(--border-c); border-radius:var(--radius-md); padding:12px; margin-bottom:1rem;">
+          <span style="font-size:0.7rem; color:var(--mid-c);">Ringkasan Catatan Guru:</span>
+          <p id="portal-summary" style="font-size:0.8rem; line-height:1.5; color:#4A4031; margin-top:4px;"></p>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end;">
+          <button id="portal-btn-open-portfolio" class="btn btn-primary">
+            📖 Buka Portofolio Hasil Kegiatan Outdoor
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 11: Parent Requests List -->
+  <div id="modal-parent-requests" class="modal-overlay">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 class="font-serif">Permintaan Les &amp; Konsultasi Saya</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-parent-requests')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="m-requests-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 12: Parent Login Dialog (6-Digit Access Code) -->
+  <div id="modal-parent-login" class="modal-overlay">
+    <div class="modal-box modal-box-sm">
+      <div class="modal-header">
+        <h2 class="font-serif">Masuk Kode Akses Siswa</h2>
+        <button class="modal-close-btn" onclick="window.dampingApp.closeModal('modal-parent-login')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.8rem; color:var(--mid-c); margin-bottom:1rem;">
+          Masukkan kode akses 6 digit yang tercantum di kartu bimbingan LessApp anak Anda.
+        </p>
+        <div class="code-input-group">
+          <input type="text" id="dialog-input-code" class="code-input" placeholder="Z5C78E" maxlength="6" value="Z5C78E" />
+          <button class="btn btn-primary" onclick="window.dampingApp.openParentPortalWithCode(document.getElementById('dialog-input-code').value); window.dampingApp.closeModal('modal-parent-login');">
+            Buka Portal
+          </button>
+        </div>
+        <div class="code-pill-list" style="margin-top:0.75rem;">
+          <span>Demo cepat:</span>
+          <button class="code-pill-btn" onclick="window.dampingApp.openParentPortalWithCode('Z5C78E'); window.dampingApp.closeModal('modal-parent-login');">Z5C78E (Farel)</button>
+          <button class="code-pill-btn" onclick="window.dampingApp.openParentPortalWithCode('NF8821'); window.dampingApp.closeModal('modal-parent-login');">NF8821 (Aisyah)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-weight:700; color:var(--dark-c);">Damping Personalized Learning Ecosystem</span>
+        <span>•</span>
+        <span>Versi Standalone Static HTML/JS</span>
+      </div>
+      <div style="font-size:0.72rem; color:var(--mid-c);">
+        Bebas dependensi build • Dapat dibuka langsung secara offline atau via server web lokal
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
