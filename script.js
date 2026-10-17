@@ -513,16 +513,42 @@
     `;
   }
 
-  // 6. Interactive Companion Map (Simulated Canvas with Interactive Pins)
+  // 6. Interactive Companion Map (Leaflet OpenStreetMap with Real Pins & Radius)
+  let leafletMapInstance = null;
+  let leafletMarkersLayer = null;
+  let leafletCirclesLayer = null;
+  let showRadiusCircles = true;
+  let markerInstances = {};
+
+  function toggleRadiusCircles() {
+    showRadiusCircles = !showRadiusCircles;
+    const btn = document.getElementById('btn-toggle-radius');
+    if (btn) {
+      btn.textContent = showRadiusCircles ? 'Radius: Aktif' : 'Radius: Nonaktif';
+      btn.style.background = showRadiusCircles ? 'var(--sage-light)' : 'transparent';
+    }
+    if (leafletCirclesLayer && leafletMapInstance) {
+      if (showRadiusCircles) {
+        if (!leafletMapInstance.hasLayer(leafletCirclesLayer)) {
+          leafletMapInstance.addLayer(leafletCirclesLayer);
+        }
+      } else {
+        if (leafletMapInstance.hasLayer(leafletCirclesLayer)) {
+          leafletMapInstance.removeLayer(leafletCirclesLayer);
+        }
+      }
+    }
+  }
+
   function renderCompanionMap(tutors, bimbels, programs, outdoors) {
     if (!el.mapCanvas) return;
 
-    // Build pins list
+    // Build pins list for quick access
     let pins = [];
-    outdoors.forEach((o) => pins.push({ id: o.id, type: 'outdoor', name: o.title, dist: o.distanceKm, icon: '🌿' }));
-    programs.forEach((p) => pins.push({ id: p.id, type: 'program', name: p.title, dist: p.distanceKm, icon: '🎯' }));
-    tutors.forEach((t) => pins.push({ id: t.id, type: 'tutor', name: t.name, dist: t.distanceKm, icon: '🎓' }));
-    bimbels.forEach((b) => pins.push({ id: b.id, type: 'bimbel', name: b.name, dist: b.distanceKm, icon: '🏢' }));
+    outdoors.forEach((o) => pins.push({ id: o.id, type: 'outdoor', name: o.title, dist: o.distanceKm, icon: '🌲', item: o }));
+    programs.forEach((p) => pins.push({ id: p.id, type: 'program', name: p.title, dist: p.distanceKm, icon: '🎯', item: p }));
+    tutors.forEach((t) => pins.push({ id: t.id, type: 'tutor', name: t.name, dist: t.distanceKm, icon: '🎓', item: t }));
+    bimbels.forEach((b) => pins.push({ id: b.id, type: 'bimbel', name: b.name, dist: b.distanceKm, icon: '🏫', item: b }));
 
     // Sort by distance
     pins.sort((a, b) => a.dist - b.dist);
@@ -536,7 +562,7 @@
           <div class="map-point-row" onclick="window.dampingApp.handlePinClick('${p.type}', '${p.id}')">
             <span style="display:flex; align-items:center; gap:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
               <span>${p.icon}</span>
-              <strong style="color:var(--dark-c);">${p.name}</strong>
+              <strong style="color:var(--dark-c); font-size:0.75rem;">${p.name}</strong>
             </span>
             <span style="color:var(--sage-deep); font-weight:700; font-size:0.7rem; white-space:nowrap;">${p.dist} km</span>
           </div>
@@ -545,7 +571,178 @@
         .join('');
     }
 
-    // Interactive Canvas Art
+    const currentLoc = window.DAMPING_DATA.PRESET_LOCATIONS.find((l) => l.name === state.filters.location) || {
+      lat: -6.2383,
+      lng: 106.8530
+    };
+
+    // If Leaflet is available, render real interactive OpenStreetMap
+    if (typeof L !== 'undefined') {
+      markerInstances = {};
+      if (!leafletMapInstance) {
+        el.mapCanvas.innerHTML = '';
+        leafletMapInstance = L.map(el.mapCanvas, {
+          center: [currentLoc.lat, currentLoc.lng],
+          zoom: 13,
+          scrollWheelZoom: true,
+          attributionControl: false
+        });
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap'
+        }).addTo(leafletMapInstance);
+
+        leafletMarkersLayer = L.layerGroup().addTo(leafletMapInstance);
+        leafletCirclesLayer = L.layerGroup().addTo(leafletMapInstance);
+      } else {
+        leafletMarkersLayer.clearLayers();
+        leafletCirclesLayer.clearLayers();
+      }
+
+      leafletMapInstance.setView([currentLoc.lat, currentLoc.lng], 13);
+
+      // Center point: user search location
+      const userMarkerIcon = L.divIcon({
+        className: 'user-center-marker',
+        html: `<div style="width:20px; height:20px; border-radius:50%; background:#C4623A; border:3px solid #fff; box-shadow:0 0 10px rgba(196,98,58,0.7);"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      });
+      const userMarker = L.marker([currentLoc.lat, currentLoc.lng], { icon: userMarkerIcon })
+        .bindPopup(`<strong>📍 Titik Pusat:</strong> ${state.filters.location}`);
+      leafletMarkersLayer.addLayer(userMarker);
+
+      // Tutor Markers (Sage Green) + Service Radius
+      if (state.filters.category === 'all' || state.filters.category === 'guru_privat') {
+        tutors.forEach((t) => {
+          if (!t.lat || !t.lng) return;
+          const icon = L.divIcon({
+            className: 'custom-tutor-pin',
+            html: `<div style="background-color:#5C8A6B; color:white; width:34px; height:34px; border-radius:50%; border:2.5px solid white; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(92,138,107,0.45); font-size:15px; cursor:pointer;">🎓</div>`,
+            iconSize: [34, 34],
+            iconAnchor: [17, 17]
+          });
+          const marker = L.marker([t.lat, t.lng], { icon });
+          markerInstances[t.id] = marker;
+
+          const popupContent = document.createElement('div');
+          popupContent.style.fontFamily = "'DM Sans', sans-serif";
+          popupContent.style.minWidth = '220px';
+          popupContent.innerHTML = `
+            <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+              <img src="${t.photoUrl}" style="width:40px; height:40px; border-radius:50%; object-fit:cover;" onerror="this.src='tutor-${t.id.replace('tutor-','')}.jpg'; if(!this.complete) this.src='assets/images/tutor-nadia.jpg'"/>
+              <div>
+                <span style="font-size:9px; font-weight:bold; background:#E8F0E8; color:#3F6B4E; padding:1px 5px; border-radius:4px;">Guru Privat</span>
+                <strong style="display:block; font-size:12px; color:#2A2418;">${t.name}</strong>
+                <span style="font-size:10px; color:#6B5E4C;">⭐ ${t.ratingAverage} • ${t.totalSessionsCompleted} sesi</span>
+              </div>
+            </div>
+            <p style="font-size:11px; color:#6B5E4C; margin:4px 0 6px;">${t.headline}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; border-top:1px solid #E8DFCE;">
+              <strong style="color:#5C8A6B; font-size:11.5px;">Rp ${t.hourlyRate.toLocaleString('id-ID')}/jam</strong>
+              <div style="display:flex; gap:4px;">
+                <button onclick="window.dampingApp.openTutorProfile('${t.id}')" style="background:#FAF6EF; color:#2A2418; border:1px solid #E8DFCE; border-radius:6px; padding:3px 8px; font-size:10px; font-weight:600; cursor:pointer;">Profil</button>
+                <button onclick="window.dampingApp.openBookingModal('${t.id}')" style="background:#5C8A6B; color:white; border:none; border-radius:6px; padding:3px 8px; font-size:10px; font-weight:600; cursor:pointer;">Ajukan</button>
+              </div>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+          leafletMarkersLayer.addLayer(marker);
+
+          if (t.serviceRadiusKm) {
+            const circle = L.circle([t.lat, t.lng], {
+              radius: t.serviceRadiusKm * 1000,
+              color: '#5C8A6B',
+              weight: 1,
+              opacity: 0.35,
+              fillColor: '#5C8A6B',
+              fillOpacity: 0.07
+            });
+            leafletCirclesLayer.addLayer(circle);
+          }
+        });
+      }
+
+      // Bimbel Markers (Navy Blue)
+      if (state.filters.category === 'all' || state.filters.category === 'lembaga_bimbel') {
+        bimbels.forEach((b) => {
+          if (!b.lat || !b.lng) return;
+          const icon = L.divIcon({
+            className: 'custom-bimbel-pin',
+            html: `<div style="background-color:#2A3A52; color:white; width:32px; height:32px; border-radius:50%; border:2px solid white; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(42,58,82,0.35); font-size:13px; cursor:pointer;">🏫</div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+          const marker = L.marker([b.lat, b.lng], { icon });
+          markerInstances[b.id] = marker;
+
+          const popupContent = document.createElement('div');
+          popupContent.style.fontFamily = "'DM Sans', sans-serif";
+          popupContent.style.minWidth = '220px';
+          popupContent.innerHTML = `
+            <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+              <img src="${b.logoUrl}" style="width:36px; height:36px; border-radius:8px; object-fit:cover;" onerror="this.src='bimbel-bp.jpg'"/>
+              <div>
+                <span style="font-size:9px; font-weight:bold; background:#EBF1F7; color:#2A3A52; padding:1px 5px; border-radius:4px;">Lembaga Bimbel</span>
+                <strong style="display:block; font-size:12px; color:#2A2418;">${b.name}</strong>
+                <span style="font-size:10px; color:#6B5E4C;">Cabang: ${b.districtName}</span>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; border-top:1px solid #E8DFCE;">
+              <strong style="color:#2A2418; font-size:11px;">${b.priceRangeText}</strong>
+              <button onclick="window.dampingApp.openBimbelInquiry('${b.id}')" style="background:#2A3A52; color:white; border:none; border-radius:6px; padding:3px 8px; font-size:10px; font-weight:600; cursor:pointer;">Daftar / Info</button>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+          leafletMarkersLayer.addLayer(marker);
+        });
+      }
+
+      // Outdoor Activity Markers (Forest Green)
+      if (state.filters.category === 'all' || state.filters.category === 'kegiatan_outdoor') {
+        outdoors.forEach((o) => {
+          if (!o.lat || !o.lng) return;
+          const icon = L.divIcon({
+            className: 'custom-outdoor-pin',
+            html: `<div style="background-color:#3F6B4E; color:white; width:34px; height:34px; border-radius:50%; border:2.5px solid white; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(63,107,78,0.4); font-size:14px; cursor:pointer;">🌲</div>`,
+            iconSize: [34, 34],
+            iconAnchor: [17, 17]
+          });
+          const marker = L.marker([o.lat, o.lng], { icon });
+          markerInstances[o.id] = marker;
+
+          const popupContent = document.createElement('div');
+          popupContent.style.fontFamily = "'DM Sans', sans-serif";
+          popupContent.style.minWidth = '220px';
+          popupContent.innerHTML = `
+            <div style="margin-bottom:6px;">
+              <span style="font-size:9px; font-weight:bold; background:#E8F0E8; color:#3F6B4E; padding:1px 5px; border-radius:4px;">Kegiatan Outdoor</span>
+              <strong style="display:block; font-size:12px; color:#2A2418; margin-top:2px;">${o.title}</strong>
+              <span style="font-size:10px; color:#6B5E4C;">📍 ${o.locationName}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; border-top:1px solid #E8DFCE;">
+              <strong style="color:#3F6B4E; font-size:11px;">Rp ${o.pricePerChild.toLocaleString('id-ID')}</strong>
+              <button onclick="window.dampingApp.openOutdoorDetail('${o.id}')" style="background:#3F6B4E; color:white; border:none; border-radius:6px; padding:3px 8px; font-size:10px; font-weight:600; cursor:pointer;">Lihat Kegiatan</button>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+          leafletMarkersLayer.addLayer(marker);
+        });
+      }
+
+      if (!showRadiusCircles && leafletMapInstance.hasLayer(leafletCirclesLayer)) {
+        leafletMapInstance.removeLayer(leafletCirclesLayer);
+      }
+
+      setTimeout(() => {
+        if (leafletMapInstance) leafletMapInstance.invalidateSize();
+      }, 250);
+
+      return;
+    }
+
+    // Interactive Canvas Art Fallback
     el.mapCanvas.innerHTML = `
       <div style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background: radial-gradient(circle at 50% 50%, #FAF6EF 0%, #E2DDD3 100%); overflow:hidden;">
         <!-- Simulated Map Grid & Streets -->
@@ -1452,8 +1649,14 @@
     alert('Permintaan les telah ' + (status === 'DITERIMA' ? 'DITERIMA' : 'DITOLAK') + '!');
   }
 
-  // Pin Click from Map
+  // Pin Click from Map / List
   function handlePinClick(type, id) {
+    if (leafletMapInstance && markerInstances[id]) {
+      const m = markerInstances[id];
+      leafletMapInstance.setView(m.getLatLng(), 14, { animate: true });
+      m.openPopup();
+      return;
+    }
     if (type === 'tutor') openTutorProfile(id);
     else if (type === 'bimbel') openBimbelProfile(id);
     else if (type === 'program') openProgramDetail(id);
@@ -1619,7 +1822,8 @@
     openParentPortalWithCode,
     openRequestsModal,
     respondRequest,
-    handlePinClick
+    handlePinClick,
+    toggleRadiusCircles
   };
 
   // 11. Initial Application Boot

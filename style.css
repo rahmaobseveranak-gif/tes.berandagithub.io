@@ -950,10 +950,32 @@ a {
   font-weight: 600;
 }
 .map-view-canvas {
-  height: 380px;
+  height: 400px;
   width: 100%;
   background-color: #E6EDEC;
   position: relative;
+  z-index: 1;
+}
+
+/* Leaflet custom map markers & popups */
+.custom-tutor-pin, .custom-bimbel-pin, .custom-outdoor-pin, .user-center-marker {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.leaflet-popup-content-wrapper {
+  background: #FAF6EF;
+  border-radius: 14px;
+  border: 1px solid #E8DFCE;
+  box-shadow: 0 10px 25px rgba(44, 38, 33, 0.15);
+  padding: 4px;
+}
+.leaflet-popup-tip {
+  background: #FAF6EF;
+}
+.leaflet-popup-content {
+  margin: 10px 12px;
+  line-height: 1.4;
 }
 .map-points-list {
   padding: 0.75rem;
